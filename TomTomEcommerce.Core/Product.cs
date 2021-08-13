@@ -29,6 +29,11 @@ namespace TomTomEcommerce.Core
         public double Price { get; set; }
 
 
+        public Brand Brand { get; set; }
+        public int BrandId { get; set; }
+
+
+
 
     }
 }
