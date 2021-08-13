@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using TomTomEcommerce.Core;
 
 namespace TomTomEcommerce.EFCore
@@ -46,6 +44,41 @@ namespace TomTomEcommerce.EFCore
             entity.Id = category.Id;
             entity.Name = category.Name;
             entity.Description = category.Description;
+            dbContext.Update(entity);
+            dbContext.SaveChanges();
+        }
+
+        public Brand FindBrand(int id)
+        {
+            var model = dbContext.Brands.Find(id);
+            return model;
+        }
+
+        public List<Brand> ListBrand()
+        {
+            var model = dbContext.Brands.ToList();
+            return model;
+        }
+
+        public void AddNewBrand(Brand brand)
+        {
+            dbContext.Brands.Add(brand);
+            dbContext.SaveChanges();
+        }
+
+        public void DeleteBrand(int id)
+        {
+            var entity = FindBrand(id);
+            dbContext.Set<Brand>().Remove(entity);
+            dbContext.SaveChanges();
+        }
+
+        public void EditBrand(Brand brand)
+        {
+            var entity = dbContext.Brands.Find(brand.Id);
+            entity.Id = brand.Id;
+            entity.Name = brand.Name;
+            entity.Description = brand.Description;
             dbContext.Update(entity);
             dbContext.SaveChanges();
         }

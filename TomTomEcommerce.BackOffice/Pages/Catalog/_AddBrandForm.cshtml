@@ -1,0 +1,34 @@
+﻿@model TomTomEcommerce.Core.Brand
+
+<div class="modal fade" id="addbrandviewid" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Add New Brand</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="modal_form" method="post">
+                    @Html.ValidationSummary(true)
+                    <div class="form-group">
+                        @Html.Label("Brand Name");
+                        @Html.TextBoxFor(x => x.Name, "", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(x => x.Name, "", new { @style = "color:red" })
+
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Brand Description");
+                        @Html.TextBoxFor(x => x.Description, "", new { @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(x => x.Name, "", new { @style = "color:red" })
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="addbrandbuttonmodal" class="btn btn-primary">Add Brand</button>
+            </div>
+        </div>
+    </div>
+</div>

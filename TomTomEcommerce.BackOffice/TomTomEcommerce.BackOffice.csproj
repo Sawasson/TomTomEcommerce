@@ -20,4 +20,8 @@
     <ProjectReference Include="..\TomTomEcommerce.EFCore\TomTomEcommerce.EFCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Catalog\Category\" />
+  </ItemGroup>
+
 </Project>
