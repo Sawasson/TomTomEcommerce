@@ -29,7 +29,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
 
             return new PartialViewResult
             {
-                ViewName = ("_ListCategories"),
+                ViewName = ("Category/_ListCategories"),
                 ViewData = new ViewDataDictionary<List<Category>>(ViewData, listmodel)
             };
         }
@@ -39,7 +39,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
 
             return new PartialViewResult
             {
-                ViewName = "_AddCategoryForm",
+                ViewName = "Category/_AddCategoryForm",
             };
         }
 
@@ -50,7 +50,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
 
             return new PartialViewResult
             {
-                ViewName = ("_ListCategories"),
+                ViewName = ("Category/_ListCategories"),
                 ViewData = new ViewDataDictionary<List<Category>>(ViewData, listmodel)
             };
         }
@@ -60,7 +60,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
             var item = tTServiceEFCore.FindCategory(id);
             return new PartialViewResult
             {
-                ViewName = ("_DeleteCategoryForm"),
+                ViewName = ("Category/_DeleteCategoryForm"),
                 ViewData = new ViewDataDictionary<Category>(ViewData, item)
             };
         }
@@ -72,7 +72,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
 
             return new PartialViewResult
             {
-                ViewName = ("_ListCategories"),
+                ViewName = ("Category/_ListCategories"),
                 ViewData = new ViewDataDictionary<List<Category>>(ViewData, listmodel)
             };
         }
@@ -82,7 +82,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
             var item = tTServiceEFCore.FindCategory(id);
             return new PartialViewResult
             {
-                ViewName = ("_EditCategoryForm"),
+                ViewName = ("Category/_EditCategoryForm"),
                 ViewData = new ViewDataDictionary<Category>(ViewData, item)
             };
         }
@@ -95,7 +95,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
 
             return new PartialViewResult
             {
-                ViewName = ("_ListCategories"),
+                ViewName = ("Category/_ListCategories"),
                 ViewData = new ViewDataDictionary<List<Category>>(ViewData, listmodel)
             };
         }

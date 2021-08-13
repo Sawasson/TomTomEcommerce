@@ -28,7 +28,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
 
             return new PartialViewResult
             {
-                ViewName = ("_ListBrands"),
+                ViewName = ("Brand/_ListBrands"),
                 ViewData = new ViewDataDictionary<List<Brand>>(ViewData, listmodel)
             };
         }
@@ -38,7 +38,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
 
             return new PartialViewResult
             {
-                ViewName = "_AddBrandForm",
+                ViewName = "Brand/_AddBrandForm",
             };
         }
 
@@ -49,7 +49,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
 
             return new PartialViewResult
             {
-                ViewName = ("_ListBrands"),
+                ViewName = ("Brand/_ListBrands"),
                 ViewData = new ViewDataDictionary<List<Brand>>(ViewData, listmodel)
             };
         }
@@ -59,7 +59,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
             var item = tTServiceEFCore.FindBrand(id);
             return new PartialViewResult
             {
-                ViewName = ("_DeleteBrandForm"),
+                ViewName = ("Brand/_DeleteBrandForm"),
                 ViewData = new ViewDataDictionary<Brand>(ViewData, item)
             };
         }
@@ -71,7 +71,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
 
             return new PartialViewResult
             {
-                ViewName = ("_ListBrands"),
+                ViewName = ("Brand/_ListBrands"),
                 ViewData = new ViewDataDictionary<List<Brand>>(ViewData, listmodel)
             };
         }
@@ -81,7 +81,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
             var item = tTServiceEFCore.FindBrand(id);
             return new PartialViewResult
             {
-                ViewName = ("_EditBrandForm"),
+                ViewName = ("Brand/_EditBrandForm"),
                 ViewData = new ViewDataDictionary<Brand>(ViewData, item)
             };
         }
@@ -94,7 +94,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
 
             return new PartialViewResult
             {
-                ViewName = ("_ListBrands"),
+                ViewName = ("Brand/_ListBrands"),
                 ViewData = new ViewDataDictionary<List<Brand>>(ViewData, listmodel)
             };
         }
