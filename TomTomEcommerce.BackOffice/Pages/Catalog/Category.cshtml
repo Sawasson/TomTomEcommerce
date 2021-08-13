@@ -1,0 +1,100 @@
+﻿@page
+@model CategoryModel
+@using TomTomEcommerce.BackOffice
+
+<h1><b>Categories</b></h1>
+
+<button class="btn btn-success" id="addcategorybutton" style="margin-bottom:15px">Add New Category</button>
+
+
+<div id="modaldiv">
+
+</div>
+
+<div id="secretajaxtable">
+
+</div>
+
+
+
+@section Scripts{
+    <script>
+
+        $(document).ready(function () {
+
+            //List
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Page("/Catalog/Category", "ListCategory")',
+                success: function (data) {
+                    $("#secretajaxtable").html(data);
+                }
+            });
+
+            //Add Category - Post
+            $(document).on("click", "#addcategorybuttonmodal", function (e) {
+                e.preventDefault();
+                var formData = $("#modal_form").serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Page("/Catalog/Category", "AddCategory")',
+                    data: formData,
+                    success: function (data) {
+                        $("#addcategoryviewid").modal("hide");
+                        $("#secretajaxtable").html("");
+                        $("#secretajaxtable").html(data);
+                        toastr["success"]("New Category Added Successfully!", "Process Success")
+                    }
+                });
+            });
+
+            //Add Category- Get
+
+            $("#addcategorybutton").click(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Page("/Catalog/Category", "AddCategory")',
+                    success: function (data) {
+                        $("#modaldiv").html(data);
+                        $("#addcategoryviewid").modal("show");
+                    }
+                });
+            });
+        });
+
+        //Delete - Post
+        $(document).on("click", "#deletecategoryonmodal", function (e) {
+            debugger;
+            var id = $(this).attr("data-id");
+            var token = '@HttpContext.GetAntiforgeryToken()';
+            data = {};
+           // data["__RequestVerificationToken"] = token;
+            data["id"] = id;
+
+
+          //  alert(id);
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Page("/Catalog/Category", "DeleteCategory")',
+                data: { id: id },
+                success: function (data) {
+                    $("#deletecategorymodal").modal("hide");
+                    $("#secretajaxtable").html("");
+                    $("#secretajaxtable").html(data);
+                    toastr["warning"]("Category Deleted!", "Process Success")
+
+                },
+                error: function myfunction(a,b,c,d,e,f) {
+
+                },
+                headers:
+                {
+                    "RequestVerificationToken": token
+                }
+
+            });
+        });
+
+
+    </script>
+}

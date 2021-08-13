@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TomTomEcommerce.EFCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace TomTomEcommerce.BackOffice
 {
@@ -23,6 +25,8 @@ namespace TomTomEcommerce.BackOffice
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            string ConnectionString = "Server=(localdb)\\mssqllocaldb; Database=TTEcommerceDB2;Integrated Security=true;";
+            services.AddDbContext<TTContext>(x => x.UseSqlServer(ConnectionString));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

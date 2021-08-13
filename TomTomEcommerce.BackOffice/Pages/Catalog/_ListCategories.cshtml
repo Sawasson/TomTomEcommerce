@@ -1,0 +1,111 @@
+﻿@using TomTomEcommerce.BackOffice
+
+@model List<TomTomEcommerce.Core.Category>
+@{
+}
+
+
+<table class="table table-bordered" cellspacing="0" width="100%">
+    <thead style="text-align:center; margin-bottom:5px; background-color:lightskyblue">
+        <tr>
+            <th>
+                <b>Id</b>
+            </th>
+            <th>
+                <b>Name</b>
+            </th>
+            <th>
+                <b>Description</b>
+            </th>
+            <th>
+                Edit
+            </th>
+            <th>
+                Delete
+            </th>
+        </tr>
+    </thead>
+    <tbody style="text-align:center">
+        @foreach (var x in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(Model => x.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(Model => x.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(Model => x.Description)
+                </td>
+                <td>
+                    <a class="btn btn-primary btn-sm" id="editbutton_@x.Id" data-id="@x.Id">Edit</a>
+                </td>
+                <td>
+                    <a class="btn btn-warning btn-sm" id="deletebutton_@x.Id" data-id="@x.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+
+    $(document).ready(function () {
+
+
+//Edit Category- Get
+
+        $('[id^=editbutton]').click(function () {
+            var id = $(this).attr("data-id");
+            alert(id);
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Page("/Catalog/Category", "EditCategory")',
+                data: { id: id },
+                success: function (data) {
+                    $("#modaldiv").html(data);
+                    $("#editcategoryviewid").modal("show");
+                }
+            });
+        });
+
+//Edit Category - Post
+        $(document).on("click", "#editcategorybuttonmodal", function (e) {
+            e.preventDefault();
+            var formData = $("#modal_form").serialize();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Page("/Catalog/Category", "EditCategory")',
+                data: formData,
+                success: function (data) {
+                    $("#editcategoryviewid").modal("hide");
+                    $("#secretajaxtable").html("");
+                    $("#secretajaxtable").html(data);
+
+                        toastr["success"]("Category Update Successfully!", "Process Success")
+                }
+            });
+        });
+
+//Delete - Get
+
+        $('[id^=deletebutton]').click(function () {
+            var id = $(this).attr("data-id");
+           // alert(id);
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Page("/Catalog/Category", "DeleteCategory")',
+                data: { id: id },
+                success: function (data) {
+                    $("#modaldiv").html(data);
+                    $("#deletecategorymodal").modal("show");
+                }
+            });
+        });
+
+
+    });
+
+
+</script>
