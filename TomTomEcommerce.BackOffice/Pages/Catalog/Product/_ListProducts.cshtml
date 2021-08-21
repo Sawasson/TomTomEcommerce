@@ -88,41 +88,26 @@
                 data: { id: id },
                 success: function (data) {
                     $("#modaldiv").html(data);
-                    $("#editcategoryviewid").modal("show");
+                    $("#editproductviewid").modal("show");
                 }
             });
         });
 
-//Edit Category - Post
-        $(document).on("click", "#editcategorybuttonmodal", function (e) {
-            e.preventDefault();
-            var formData = $("#modal_form").serialize();
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Page("/Catalog/Category", "EditCategory")',
-                data: formData,
-                success: function (data) {
-                    $("#editcategoryviewid").modal("hide");
-                    $("#secretajaxtable").html("");
-                    $("#secretajaxtable").html(data);
 
-                        toastr["success"]("Category Update Successfully!", "Process Success")
-                }
-            });
-        });
 
-//Delete - Get
+//Delete Product - Get
 
         $('[id^=deletebutton]').click(function () {
             var id = $(this).attr("data-id");
-           // alert(id);
+            //alert(id);
             $.ajax({
                 type: 'GET',
-                url: '@Url.Page("/Catalog/Category", "DeleteCategory")',
+                url: '@Url.Page("/Catalog/Product", "DeleteProduct")',
                 data: { id: id },
                 success: function (data) {
+                    $("#modaldiv").html("");
                     $("#modaldiv").html(data);
-                    $("#deletecategorymodal").modal("show");
+                    $("#deleteproductmodal").modal("show");
                 }
             });
         });

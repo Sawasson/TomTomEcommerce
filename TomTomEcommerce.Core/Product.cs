@@ -10,25 +10,28 @@ namespace TomTomEcommerce.Core
         [Key]
         public int Id { get; set; }
 
-
+        [Required(ErrorMessage = "Enter a product name...")]
         public string Name { get; set; }
 
-
+        [Required(ErrorMessage = "Enter a description...")]
         public string Description { get; set; }
 
+        public Brand Brand { get; set; }
+        public int BrandId { get; set; }
 
         public Category Category { get; set; }
         public int CategoryId { get; set; }
 
 
+        [Required(ErrorMessage = "Enter a stock data...")]
         public int Stock { get; set; }
 
 
+        [Required(ErrorMessage = "Enter a price data...")]
         public double Price { get; set; }
 
 
-        public Brand Brand { get; set; }
-        public int BrandId { get; set; }
+
 
 
 

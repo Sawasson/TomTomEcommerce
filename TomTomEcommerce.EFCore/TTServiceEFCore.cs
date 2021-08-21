@@ -121,6 +121,11 @@ namespace TomTomEcommerce.EFCore
             entity.Id = product.Id;
             entity.Name = product.Name;
             entity.Description = product.Description;
+            entity.BrandId = product.BrandId;
+            entity.CategoryId = product.CategoryId;
+            entity.Stock = product.Stock;
+            entity.Price = product.Price;
+
             dbContext.Update(entity);
             dbContext.SaveChanges();
         }
@@ -136,5 +141,7 @@ namespace TomTomEcommerce.EFCore
             var model = dbContext.Categories.ToList();
             return model;
         }
+
+
     }
 }

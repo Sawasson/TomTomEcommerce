@@ -39,17 +39,6 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
             };
         }
 
-        //private void PopulateCategories()
-        //{
-        //    var categories = tTServiceEFCore.GetCategories();
-        //    Categories = new SelectList(categories, "Id", "Name");
-        //}
-
-        //private void PopulateBrands()
-        //{
-        //    var brands = tTServiceEFCore.GetBrands();
-        //    Brands = new SelectList(brands, "Id", "Name");
-        //}
 
         public PartialViewResult OnGetAddProduct()
         {
@@ -59,7 +48,12 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
             Brands = new SelectList(brands, "Id", "Name");
             Categories = new SelectList(categories, "Id", "Name");
 
-            return PartialView("Product/_AddProduct", this);
+            //return new PartialViewResult
+            //{
+            //    ViewName = ("Product/_AddProductForm"),
+            //    ViewData = new ViewDataDictionary<ProductModel>(ViewData, this)
+            //};
+            return PartialView("Product/_AddProductForm", this);
         }
 
         public PartialViewResult OnPostAddProduct(TomTomEcommerce.Core.Product product)
@@ -69,7 +63,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
 
             return new PartialViewResult
             {
-                ViewName = ("Product/_ListProduct"),
+                ViewName = ("Product/_ListProducts"),
                 ViewData = new ViewDataDictionary<List<TomTomEcommerce.Core.Product>>(ViewData, listmodel)
             };
         }
@@ -77,6 +71,10 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
         public PartialViewResult OnGetDeleteProduct(int id)
         {
             var item = tTServiceEFCore.FindProduct(id);
+            var brand = tTServiceEFCore.FindBrand(item.BrandId);
+            item.Brand = brand;
+            var category = tTServiceEFCore.FindCategory(item.CategoryId);
+            item.Category = category;
             return new PartialViewResult
             {
                 ViewName = ("Product/_DeleteProductForm"),
@@ -99,10 +97,17 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
         public PartialViewResult OnGetEditProduct(int id)
         {
             var item = tTServiceEFCore.FindProduct(id);
+            Product = item;
+            var brands = tTServiceEFCore.GetBrands();
+            var categories = tTServiceEFCore.GetCategories();
+
+            Brands = new SelectList(brands, "Id", "Name");
+            Categories = new SelectList(categories, "Id", "Name");
+
             return new PartialViewResult
             {
                 ViewName = ("Product/_EditProductForm"),
-                ViewData = new ViewDataDictionary<TomTomEcommerce.Core.Product>(ViewData, item)
+                ViewData = new ViewDataDictionary<ProductModel>(ViewData, this)
             };
         }
 

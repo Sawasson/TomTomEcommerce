@@ -1,6 +1,6 @@
 ﻿@model TomTomEcommerce.BackOffice.Pages.Catalog.ProductModel
 
-    <div class="modal fade" id="addproductviewid" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="editproductviewid" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -11,8 +11,8 @@
             </div>
             <div class="modal-body">
                 <form id="modal_form" method="post">
-                    @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true)
+                    @Html.HiddenFor(x => x.Product.Id)
                     <div class="form-group">
                         <b>@Html.Label("Product Name")</b>
                         @Html.TextBoxFor(x => x.Product.Name, "", new { @class = "form-control" })
@@ -48,8 +48,29 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" id="addproductbuttonmodal" class="btn btn-primary">Add Product</button>
+                <button type="button" id="editproductbuttonmodal" class="btn btn-primary">Update Product</button>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    //Edit Product - Post
+    $("#editproductbuttonmodal").click(function (e) {
+        //$(document).on("click", "#editproductbuttonmodal", function (e) {
+            e.preventDefault();
+            var formData = $("#modal_form").serialize();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Page("/Catalog/Product", "EditProduct")',
+                data: formData,
+                success: function (data) {
+                    $("#editproductviewid").modal("hide");
+                    $("#secretajaxtable").html("");
+                    $("#secretajaxtable").html(data);
+
+                    toastr["success"]("Product Update Successfully!", "Process Success")
+                }
+            });
+        });
+</script>

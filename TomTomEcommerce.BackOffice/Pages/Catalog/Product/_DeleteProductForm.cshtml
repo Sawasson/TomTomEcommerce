@@ -1,0 +1,49 @@
+﻿@model TomTomEcommerce.Core.Product
+
+
+<div class="modal fade" id="deleteproductmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Are You Sure To Delete This Product?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="text-align:center">
+                <div>
+                    <form method="post" class="form-group">
+                        @Html.AntiForgeryToken()
+                        <b>@Html.Label("Product Name")</b><br />
+                        @Html.DisplayFor(x => x.Name)
+                    </form>
+                    <div class="form-group">
+                        <b>@Html.Label("Product Description")</b><br />
+                        @Html.DisplayFor(x => x.Description)
+                    </div>
+                    <div class="form-group">
+                        <b>@Html.Label("Brand")</b>
+                        @Html.DisplayFor(x => x.Brand.Name)
+
+                    </div>
+                    <div class="form-group">
+                        <b>@Html.Label("Category")</b>
+                        @Html.DisplayFor(x => x.Category.Name)
+                    </div>
+                    <div class="form-group">
+                        <b>@Html.Label("Stock")</b>
+                        @Html.DisplayFor(x => x.Stock)
+                    </div>
+                    <div class="form-group">
+                        <b>@Html.Label("Price")</b>
+                        @Html.DisplayFor(x => x.Price)
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="deleteproductonmodal" data-id="@Model.Id">Delete Product</button>
+            </div>
+        </div>
+    </div>
+</div>
