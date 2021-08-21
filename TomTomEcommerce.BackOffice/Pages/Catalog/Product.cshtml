@@ -1,10 +1,10 @@
 ﻿@page
-@model CategoryModel
+@model ProductModel
 @using TomTomEcommerce.BackOffice
 
-<h1><b>Categories</b></h1>
+<h1><b>Products</b></h1>
 
-<button class="btn btn-success" id="addcategorybutton" style="margin-bottom:15px">Add New Category</button>
+<button class="btn btn-success" id="addproductbutton" style="margin-bottom:15px">Add New Product</button>
 
 
 <div id="modaldiv">
@@ -27,40 +27,40 @@
             //List
             $.ajax({
                 type: 'GET',
-                url: '@Url.Page("/Catalog/Category", "ListCategory")',
+                url: '@Url.Page("/Catalog/Product", "ListProduct")',
                 success: function (data) {
                     $("#secretajaxtable").html(data);
                 }
             });
 
-            //Add Category - Post
-            $(document).on("click", "#addcategorybuttonmodal", function (e) {
+            //Add Product - Post
+            $(document).on("click", "#addproductbuttonmodal", function (e) {
                 e.preventDefault();
                 var formData = $("#modal_form").serialize();
                 $.ajax({
                     type: 'POST',
-                    url: '@Url.Page("/Catalog/Category", "AddCategory")',
+                    url: '@Url.Page("/Catalog/Product", "AddProduct")',
                     data: formData,
                     success: function (data) {
-                        $("#addcategoryviewid").modal("hide");
+                        $("#addproductviewid").modal("hide");
                         $("#secretajaxtable").html("");
                         $("#secretajaxtable").html(data);
-                        toastr["success"]("New Category Added Successfully!", "Process Success")
+                        toastr["success"]("New Product Added Successfully!", "Process Success")
                     }
                 });
 
 
             });
 
-            //Add Category- Get
+            //Add Product- Get
 
-            $("#addcategorybutton").click(function () {
+            $("#addproductbutton").click(function () {
                 $.ajax({
                     type: 'GET',
-                    url: '@Url.Page("/Catalog/Category", "AddCategory")',
+                    url: '@Url.Page("/Catalog/Product", "AddProduct")',
                     success: function (data) {
                         $("#modaldiv").html(data);
-                        $("#addcategoryviewid").modal("show");
+                        $("#addproductviewid").modal("show");
                         $.validator.unobtrusive.parse($("#modaldiv"));
 
                         //    debugger;
@@ -72,7 +72,7 @@
 
 
             //Delete - Post
-            $(document).on("click", "#deletecategoryonmodal", function (e) {
+            $(document).on("click", "#deleteproductonmodal", function (e) {
                 debugger;
                 var id = $(this).attr("data-id");
                 var token = '@HttpContext.GetAntiforgeryToken()';
@@ -84,13 +84,13 @@
                 //  alert(id);
                 $.ajax({
                     type: 'POST',
-                    url: '@Url.Page("/Catalog/Category", "DeleteCategory")',
+                    url: '@Url.Page("/Catalog/Product", "DeleteProduct")',
                     data: { id: id },
                     success: function (data) {
-                        $("#deletecategorymodal").modal("hide");
+                        $("#deleteproductmodal").modal("hide");
                         $("#secretajaxtable").html("");
                         $("#secretajaxtable").html(data);
-                        toastr["warning"]("Category Deleted!", "Process Success")
+                        toastr["warning"]("Product Deleted!", "Process Success")
 
                     },
                     error: function myfunction(a, b, c, d, e, f) {

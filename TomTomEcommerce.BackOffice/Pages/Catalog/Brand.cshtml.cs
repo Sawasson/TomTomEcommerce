@@ -20,7 +20,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
         }
 
         [BindProperty(SupportsGet = true)]
-        public List<Brand> listmodel { get; set; }
+        public List<TomTomEcommerce.Core.Brand> listmodel { get; set; }
 
         public PartialViewResult OnGetListBrand()
         {
@@ -29,7 +29,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
             return new PartialViewResult
             {
                 ViewName = ("Brand/_ListBrands"),
-                ViewData = new ViewDataDictionary<List<Brand>>(ViewData, listmodel)
+                ViewData = new ViewDataDictionary<List<TomTomEcommerce.Core.Brand>>(ViewData, listmodel)
             };
         }
 
@@ -42,7 +42,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
             };
         }
 
-        public PartialViewResult OnPostAddBrand(Brand brand)
+        public PartialViewResult OnPostAddBrand(TomTomEcommerce.Core.Brand brand)
         {
             tTServiceEFCore.AddNewBrand(brand);
             listmodel = tTServiceEFCore.ListBrand();
@@ -50,7 +50,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
             return new PartialViewResult
             {
                 ViewName = ("Brand/_ListBrands"),
-                ViewData = new ViewDataDictionary<List<Brand>>(ViewData, listmodel)
+                ViewData = new ViewDataDictionary<List<TomTomEcommerce.Core.Brand>>(ViewData, listmodel)
             };
         }
 
@@ -60,7 +60,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
             return new PartialViewResult
             {
                 ViewName = ("Brand/_DeleteBrandForm"),
-                ViewData = new ViewDataDictionary<Brand>(ViewData, item)
+                ViewData = new ViewDataDictionary<TomTomEcommerce.Core.Brand>(ViewData, item)
             };
         }
 
@@ -72,7 +72,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
             return new PartialViewResult
             {
                 ViewName = ("Brand/_ListBrands"),
-                ViewData = new ViewDataDictionary<List<Brand>>(ViewData, listmodel)
+                ViewData = new ViewDataDictionary<List<TomTomEcommerce.Core.Brand>>(ViewData, listmodel)
             };
         }
 
@@ -82,11 +82,11 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
             return new PartialViewResult
             {
                 ViewName = ("Brand/_EditBrandForm"),
-                ViewData = new ViewDataDictionary<Brand>(ViewData, item)
+                ViewData = new ViewDataDictionary<TomTomEcommerce.Core.Brand>(ViewData, item)
             };
         }
 
-        public PartialViewResult OnPostEditBrand(Brand brand)
+        public PartialViewResult OnPostEditBrand(TomTomEcommerce.Core.Brand brand)
         {
             tTServiceEFCore.EditBrand(brand);
 
@@ -95,7 +95,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
             return new PartialViewResult
             {
                 ViewName = ("Brand/_ListBrands"),
-                ViewData = new ViewDataDictionary<List<Brand>>(ViewData, listmodel)
+                ViewData = new ViewDataDictionary<List<TomTomEcommerce.Core.Brand>>(ViewData, listmodel)
             };
         }
 

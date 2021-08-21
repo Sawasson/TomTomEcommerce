@@ -20,7 +20,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
         }
 
         [BindProperty(SupportsGet = true)]
-        public List<Category> listmodel { get; set; }
+        public List<TomTomEcommerce.Core.Category> listmodel { get; set; }
 
 
         public PartialViewResult OnGetListCategory()
@@ -30,7 +30,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
             return new PartialViewResult
             {
                 ViewName = ("Category/_ListCategories"),
-                ViewData = new ViewDataDictionary<List<Category>>(ViewData, listmodel)
+                ViewData = new ViewDataDictionary<List<TomTomEcommerce.Core.Category>>(ViewData, listmodel)
             };
         }
 
@@ -43,7 +43,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
             };
         }
 
-        public PartialViewResult OnPostAddCategory(Category category)
+        public PartialViewResult OnPostAddCategory(TomTomEcommerce.Core.Category category)
         {
             tTServiceEFCore.AddNewCategory(category);
             listmodel = tTServiceEFCore.ListCategory();
@@ -51,7 +51,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
             return new PartialViewResult
             {
                 ViewName = ("Category/_ListCategories"),
-                ViewData = new ViewDataDictionary<List<Category>>(ViewData, listmodel)
+                ViewData = new ViewDataDictionary<List<TomTomEcommerce.Core.Category>>(ViewData, listmodel)
             };
         }
 
@@ -61,7 +61,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
             return new PartialViewResult
             {
                 ViewName = ("Category/_DeleteCategoryForm"),
-                ViewData = new ViewDataDictionary<Category>(ViewData, item)
+                ViewData = new ViewDataDictionary<TomTomEcommerce.Core.Category>(ViewData, item)
             };
         }
 
@@ -73,7 +73,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
             return new PartialViewResult
             {
                 ViewName = ("Category/_ListCategories"),
-                ViewData = new ViewDataDictionary<List<Category>>(ViewData, listmodel)
+                ViewData = new ViewDataDictionary<List<TomTomEcommerce.Core.Category>>(ViewData, listmodel)
             };
         }
 
@@ -83,11 +83,11 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
             return new PartialViewResult
             {
                 ViewName = ("Category/_EditCategoryForm"),
-                ViewData = new ViewDataDictionary<Category>(ViewData, item)
+                ViewData = new ViewDataDictionary<TomTomEcommerce.Core.Category>(ViewData, item)
             };
         }
 
-        public PartialViewResult OnPostEditCategory(Category category)
+        public PartialViewResult OnPostEditCategory(TomTomEcommerce.Core.Category category)
         {
             tTServiceEFCore.EditCategory(category);
 
@@ -96,7 +96,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
             return new PartialViewResult
             {
                 ViewName = ("Category/_ListCategories"),
-                ViewData = new ViewDataDictionary<List<Category>>(ViewData, listmodel)
+                ViewData = new ViewDataDictionary<List<TomTomEcommerce.Core.Category>>(ViewData, listmodel)
             };
         }
     }

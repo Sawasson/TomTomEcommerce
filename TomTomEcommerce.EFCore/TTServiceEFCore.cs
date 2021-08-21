@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
+using System.Web.Mvc;
 using TomTomEcommerce.Core;
 
 namespace TomTomEcommerce.EFCore
@@ -27,6 +30,7 @@ namespace TomTomEcommerce.EFCore
 
         public void AddNewCategory(Category category)
         {
+            
             dbContext.Categories.Add(category);
             dbContext.SaveChanges();
         }
@@ -81,6 +85,56 @@ namespace TomTomEcommerce.EFCore
             entity.Description = brand.Description;
             dbContext.Update(entity);
             dbContext.SaveChanges();
+        }
+
+        public Product FindProduct(int id)
+        {
+            var model = dbContext.Products.Find(id);
+            return model;
+        }
+
+        public List<Product> ListProduct()
+        {
+            var model = dbContext.Products
+                .Include(x=>x.Brand)
+                .Include(x => x.Category)
+                .ToList();
+            return model;
+        }
+
+        public void AddNewProduct(Product product)
+        {
+            dbContext.Products.Add(product);
+            dbContext.SaveChanges();
+        }
+
+        public void DeleteProduct(int id)
+        {
+            var entity = FindProduct(id);
+            dbContext.Set<Product>().Remove(entity);
+            dbContext.SaveChanges();
+        }
+
+        public void EditProduct(Product product)
+        {
+            var entity = dbContext.Products.Find(product.Id);
+            entity.Id = product.Id;
+            entity.Name = product.Name;
+            entity.Description = product.Description;
+            dbContext.Update(entity);
+            dbContext.SaveChanges();
+        }
+
+        public List<Brand> GetBrands()
+        {
+            var model = dbContext.Brands.ToList();
+            return model;
+        }
+
+        public List<Category> GetCategories()
+        {
+            var model = dbContext.Categories.ToList();
+            return model;
         }
     }
 }
