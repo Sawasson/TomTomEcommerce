@@ -12,15 +12,21 @@ namespace TomTomEcommerce.WebApp.Pages
     public class ShopModel : PageModel
     {
         private readonly TTWebServiceEFCore tTWebServiceEFCore;
+        private readonly TTServiceEFCore tTServiceEFCore;
+
 
         public ShopModel(TTContext tTContext)
         {
             this.tTWebServiceEFCore = new TTWebServiceEFCore(tTContext);
+            this.tTServiceEFCore = new TTServiceEFCore(tTContext);
         }
 
         [BindProperty(SupportsGet = true)]
         public List<TomTomEcommerce.Core.Category> CategoryList { get; set; }
         public List<TomTomEcommerce.Core.Product> ProductList { get; set; }
+        public List<ProductImage> ProductImages { get; set; }
+        public ProductImage ProductImage { get; set; }
+
 
 
         public void OnGet(int? categoryId)
@@ -29,11 +35,13 @@ namespace TomTomEcommerce.WebApp.Pages
             {
                 ProductList = tTWebServiceEFCore.GetProductsByCategoryId(categoryId.Value);
                 CategoryList = tTWebServiceEFCore.ListCategory();
+                ProductImages = tTServiceEFCore.ListProductImage();
             }
             else
             {
                 ProductList = tTWebServiceEFCore.ListProduct();
                 CategoryList = tTWebServiceEFCore.ListCategory();
+                ProductImages = tTServiceEFCore.ListProductImage();
             }
         }
     }

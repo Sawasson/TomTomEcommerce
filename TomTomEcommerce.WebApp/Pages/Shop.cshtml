@@ -3,7 +3,6 @@
 @{
 }
 
-
 <div id="wrapper">
 
     <section class="top-discount-area d-md-flex align-items-center">
@@ -109,19 +108,19 @@
                                         <!-- Single Item -->
                                         @foreach (var category in Model.CategoryList.Where(x => x.ParentId == null))
                                         {
-                                        <li data-toggle="collapse" data-target="#@category.Id" class="collapsed">
+                                            <li data-toggle="collapse" data-target="#@category.Id" class="collapsed">
 
-                                            <a href="#">@category.Name</a>
-                                            @{var categorylist = Model.CategoryList.Where(x => x.ParentId == category.Id);
-                                            }
-                                            <ul class="sub-menu collapse" id="@category.Id">
-
-                                                @foreach (var cat in categorylist)
-                                                {
-                                                    <li><a href="@Url.Page("Shop","",new { categoryId=cat.Id})">@cat.Name</a></li>
+                                                <a href="#">@category.Name</a>
+                                                @{var categorylist = Model.CategoryList.Where(x => x.ParentId == category.Id);
                                                 }
-                                            </ul>
-                                        </li>
+                                                <ul class="sub-menu collapse" id="@category.Id">
+
+                                                    @foreach (var cat in categorylist)
+                                                    {
+                                                        <li><a href="@Url.Page("Shop","",new { categoryId=cat.Id})">@cat.Name</a></li>
+                                                    }
+                                                </ul>
+                                            </li>
                                         }
                                     </ul>
                                 </div>
@@ -217,10 +216,11 @@
 
                             @foreach (var product in Model.ProductList)
                             {
+                                var imagePath = Model.ProductImages.Where(x => x.ProductId == product.Id).FirstOrDefault().PathLarge;
                                 <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.2s">
                                     <!-- Product Image -->
-                                    <div  class="product-img">
-                                        <a href="@Url.Page("Product-Details","",new { productId=product.Id})"><img src="img/product-img/product-1.jpg" alt=""></a>
+                                    <div class="product-img">
+                                        <a href="@Url.Page("Product-Details","",new { productId=product.Id})"><img src="@Url.Content("C:/Projects/TomTomEcommerce/TomTomEcommerce.BackOffice/wwwroot/img/"+imagePath)" alt=""></a>
                                         <div class="product-quicview">
                                             <a href="@Url.Page("Product-Details","",new { productId=product.Id})"><i class="ti-eye"></i></a>
                                         </div>
