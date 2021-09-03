@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TomTomEcommerce.Core", "Tom
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TomTomEcommerce.EFCore", "TomTomEcommerce.EFCore\TomTomEcommerce.EFCore.csproj", "{60CB4CD2-C945-40F7-942A-00C2694E1F5C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TomTomEcommerce.WebApp", "TomTomEcommerce.WebApp\TomTomEcommerce.WebApp.csproj", "{EB8ACAD9-441E-4A5E-9C64-B5FA4BE21DC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TomTomEcommerce.Helpers", "TomTomEcommerce.Helpers\TomTomEcommerce.Helpers.csproj", "{57A59E04-22C4-4FE0-B90F-12046FB9064C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{60CB4CD2-C945-40F7-942A-00C2694E1F5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60CB4CD2-C945-40F7-942A-00C2694E1F5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60CB4CD2-C945-40F7-942A-00C2694E1F5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB8ACAD9-441E-4A5E-9C64-B5FA4BE21DC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB8ACAD9-441E-4A5E-9C64-B5FA4BE21DC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB8ACAD9-441E-4A5E-9C64-B5FA4BE21DC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB8ACAD9-441E-4A5E-9C64-B5FA4BE21DC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57A59E04-22C4-4FE0-B90F-12046FB9064C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57A59E04-22C4-4FE0-B90F-12046FB9064C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57A59E04-22C4-4FE0-B90F-12046FB9064C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57A59E04-22C4-4FE0-B90F-12046FB9064C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

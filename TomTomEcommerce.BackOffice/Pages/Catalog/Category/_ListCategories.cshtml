@@ -12,6 +12,9 @@
                 <b>Id</b>
             </th>
             <th>
+                <b>Parent</b>
+            </th>
+            <th>
                 <b>Name</b>
             </th>
             <th>
@@ -28,23 +31,27 @@
     <tbody style="text-align:center">
         @foreach (var x in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(Model => x.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(Model => x.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(Model => x.Description)
-                </td>
-                <td>
-                    <a class="btn btn-primary btn-sm" id="editbutton_@x.Id" data-id="@x.Id">Edit</a>
-                </td>
-                <td>
-                    <a class="btn btn-warning btn-sm" id="deletebutton_@x.Id" data-id="@x.Id">Delete</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(Model => x.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(Model => x.Id)
+
+            </td>
+            <td>
+                @Html.DisplayFor(Model => x.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(Model => x.Description)
+            </td>
+            <td>
+                <a class="btn btn-primary btn-sm" id="editbutton_@x.Id" data-id="@x.Id">Edit</a>
+            </td>
+            <td>
+                <a class="btn btn-warning btn-sm" id="deletebutton_@x.Id" data-id="@x.Id">Delete</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

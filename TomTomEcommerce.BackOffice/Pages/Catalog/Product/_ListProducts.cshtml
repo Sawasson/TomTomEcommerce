@@ -1,9 +1,8 @@
 ﻿@using TomTomEcommerce.BackOffice
 
-@model List<TomTomEcommerce.Core.Product>
+@model TomTomEcommerce.BackOffice.Pages.Catalog.ProductModel
 @{
 }
-
 
 <table class="table table-responsive-md table-striped table-bordered table-hover" cellspacing="0" width="100%">
     <thead style="text-align:center; margin-bottom:5px; background-color:lightskyblue">
@@ -30,6 +29,9 @@
                 <b>Price</b>
             </th>
             <th>
+                <b>Document Path</b>
+            </th>
+            <th>
                 Edit
             </th>
             <th>
@@ -38,37 +40,51 @@
         </tr>
     </thead>
     <tbody style="text-align:center">
-        @foreach (var x in Model)
+        @foreach (var x in Model.listmodel)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(Model => x.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(Model => x.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(Model => x.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(Model => x.Brand.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(Model => x.Category.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(Model => x.Stock)
-            </td>
-            <td>
-                @Html.DisplayFor(Model => x.Price)
-            </td>
-            <td>
-                <a class="btn btn-primary btn-sm" id="editbutton_@x.Id" data-id="@x.Id">Edit</a>
-            </td>
-            <td>
-                <a class="btn btn-warning btn-sm" id="deletebutton_@x.Id" data-id="@x.Id">Delete</a>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(Model => x.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(Model => x.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(Model => x.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(Model => x.Brand.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(Model => x.Category.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(Model => x.Stock)
+                </td>
+                <td>
+                    @Html.DisplayFor(Model => x.Price)
+                </td>
+                <td>
+                    @if (x.ProductImages != null)
+                    {
+                        @foreach (var item in x.ProductImages)
+                        {
+                            <a href="~/img/@item.PathSmall" target=”_blank”><img src="/img/@item.PathSmall" height="20px" /></a>
+                        }
+                    }
+                    else
+                    {
+                        <a>No Photo View</a>
+                    }
+
+                </td>
+                <td>
+                    <a class="btn btn-primary btn-sm" id="editbutton_@x.Id" data-id="@x.Id">Edit</a>
+                </td>
+                <td>
+                    <a class="btn btn-warning btn-sm" id="deletebutton_@x.Id" data-id="@x.Id">Delete</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
@@ -95,7 +111,8 @@
 
 
 
-//Delete Product - Get
+
+//GET - DELETE PRODUCT
 
         $('[id^=deletebutton]').click(function () {
             var id = $(this).attr("data-id");
@@ -111,6 +128,7 @@
                 }
             });
         });
+
 
 
     });

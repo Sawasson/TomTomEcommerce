@@ -1,6 +1,6 @@
 ﻿@model TomTomEcommerce.BackOffice.Pages.Catalog.ProductModel
 
-    <div class="modal fade" id="addproductviewid" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="addproductviewid" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,41 +10,67 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="modal_form" method="post">
-                    @Html.AntiForgeryToken()
-                    @Html.ValidationSummary(true)
-                    <div class="form-group">
-                        <b>@Html.Label("Product Name")</b>
-                        @Html.TextBoxFor(x => x.Product.Name, "", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Product.Name, "", new { @style = "color:red" })
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Product Details</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Photos</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Other</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                        <form id="modal_form" method="post" enctype="multipart/form-data">
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+                            <div class="form-group">
+                                <b>@Html.Label("Product Name")</b>
+                                @Html.TextBoxFor(x => x.Product.Name, "", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.Product.Name, "", new { @style = "color:red" })
+
+                            </div>
+                            <div class="form-group">
+                                <b>@Html.Label("Product Description")</b>
+                                @Html.TextBoxFor(x => x.Product.Description, "", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.Product.Description, "", new { @style = "color:red" })
+                            </div>
+                            <div class="form-group">
+                                <b>@Html.Label("Brand")</b>
+                                @Html.DropDownListFor(x => x.Product.BrandId, Model.Brands, "---Choose a brand---", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.Product.BrandId, "", new { @style = "color:red" })
+                            </div>
+                            <div class="form-group">
+                                <b>@Html.Label("Category")</b>
+                                @Html.DropDownListFor(x => x.Product.CategoryId, Model.Categories, "---Choose a category---", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.Product.CategoryId, "", new { @style = "color:red" })
+                            </div>
+                            <div class="form-group">
+                                <b>@Html.Label("Stock")</b>
+                                @Html.TextBoxFor(x => x.Product.Stock, "", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.Product.Stock, "", new { @style = "color:red" })
+                            </div>
+                            <div class="form-group">
+                                <b>@Html.Label("Price")</b>
+                                @Html.TextBoxFor(x => x.Product.Price, "", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.Product.Price, "", new { @style = "color:red" })
+                            </div>
+                        </form>
 
                     </div>
-                    <div class="form-group">
-                        <b>@Html.Label("Product Description")</b>
-                        @Html.TextBoxFor(x => x.Product.Description, "", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Product.Description, "", new { @style = "color:red" })
+                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        <form id="modal_file" method="post" enctype="multipart/form-data">
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+                            <div class="form-group">
+                                <b>@Html.Label("Image")</b>
+                            </div>
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <b>@Html.Label("Brand")</b>
-                        @Html.DropDownListFor(x => x.Product.BrandId, Model.Brands, "---Choose a brand---", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Product.BrandId, "", new { @style = "color:red" })
-                    </div>
-                    <div class="form-group">
-                        <b>@Html.Label("Category")</b>
-                        @Html.DropDownListFor(x => x.Product.CategoryId, Model.Categories, "---Choose a category---", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Product.CategoryId, "", new { @style = "color:red" })
-                    </div>
-                    <div class="form-group">
-                        <b>@Html.Label("Stock")</b>
-                        @Html.TextBoxFor(x => x.Product.Stock, "", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Product.Stock, "", new { @style = "color:red" })
-                    </div>
-                    <div class="form-group">
-                        <b>@Html.Label("Price")</b>
-                        @Html.TextBoxFor(x => x.Product.Price, "", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Product.Price, "", new { @style = "color:red" })
-                    </div>
-                </form>
+                    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -53,3 +79,4 @@
         </div>
     </div>
 </div>
+

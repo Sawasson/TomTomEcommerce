@@ -1,0 +1,41 @@
+﻿@model TomTomEcommerce.BackOffice.Pages.Catalog.ProductModel
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+<table class="table table-responsive-md table-striped table-bordered table-hover" cellspacing="0" width="100%">
+    <thead style="text-align:center; margin-bottom:5px; background-color:lightskyblue">
+        <tr>
+            <th>
+                <b>Image</b>
+            </th>
+            <th>
+                <b>Path</b>
+            </th>
+            <th>
+                Delete
+            </th>
+        </tr>
+    </thead>
+    <tbody style="text-align:center">
+        @foreach (var x in Model.ProductImages)
+        {
+            <tr>
+                <td>
+                    <a href="~/img/small/s-@x.Path" target=”_blank”><img src="/img/small/s-@x.Path" height="40px" /></a>
+                </td>
+                <td>
+                    @Html.DisplayFor(Model => x.Path)
+
+                </td>
+                <td>
+                    <a class="btn btn-warning btn-sm" id="deleteImageButtononlist" data-id="@x.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

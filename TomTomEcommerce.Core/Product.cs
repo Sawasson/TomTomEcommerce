@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace TomTomEcommerce.Core
@@ -30,7 +32,11 @@ namespace TomTomEcommerce.Core
         [Required(ErrorMessage = "Enter a price data...")]
         public double Price { get; set; }
 
+        [NotMapped]
+        public IFormFile DocumentFile { get; set; }
 
+
+        public List<ProductImage> ProductImages { get; set; }
 
 
 

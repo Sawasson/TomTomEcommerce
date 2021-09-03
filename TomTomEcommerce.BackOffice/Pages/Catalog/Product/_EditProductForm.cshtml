@@ -1,50 +1,86 @@
 ﻿@model TomTomEcommerce.BackOffice.Pages.Catalog.ProductModel
 
-<div class="modal fade" id="editproductviewid" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal fade" id="editproductviewid" tabindex="-2" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Add New Product</h5>
+                <h5 class="modal-title" id="exampleModalCenterTitle">Edit New Product</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="modal_form" method="post">
-                    @Html.ValidationSummary(true)
-                    @Html.HiddenFor(x => x.Product.Id)
-                    <div class="form-group">
-                        <b>@Html.Label("Product Name")</b>
-                        @Html.TextBoxFor(x => x.Product.Name, "", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Product.Name, "", new { @style = "color:red" })
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Product Details</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Photos</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Other</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                        <form id="modal_form" method="post" enctype="multipart/form-data">
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+                            @Html.HiddenFor(x => x.Product.Id)
+                            <div class="form-group">
+                                <b>@Html.Label("Product Name")</b>
+                                @Html.TextBoxFor(x => x.Product.Name, "", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.Product.Name, "", new { @style = "color:red" })
+
+                            </div>
+                            <div class="form-group">
+                                <b>@Html.Label("Product Description")</b>
+                                @Html.TextBoxFor(x => x.Product.Description, "", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.Product.Description, "", new { @style = "color:red" })
+                            </div>
+                            <div class="form-group">
+                                <b>@Html.Label("Brand")</b>
+                                @Html.DropDownListFor(x => x.Product.BrandId, Model.Brands, "---Choose a brand---", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.Product.BrandId, "", new { @style = "color:red" })
+                            </div>
+                            <div class="form-group">
+                                <b>@Html.Label("Category")</b>
+                                @Html.DropDownListFor(x => x.Product.CategoryId, Model.Categories, "---Choose a category---", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.Product.CategoryId, "", new { @style = "color:red" })
+                            </div>
+                            <div class="form-group">
+                                <b>@Html.Label("Stock")</b>
+                                @Html.TextBoxFor(x => x.Product.Stock, "", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.Product.Stock, "", new { @style = "color:red" })
+                            </div>
+                            <div class="form-group">
+                                <b>@Html.Label("Price")</b>
+                                @Html.TextBoxFor(x => x.Product.Price, "", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.Product.Price, "", new { @style = "color:red" })
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        <form id="fileForm" method="post" enctype="multipart/form-data">
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+                            <div class="form-group">
+                                <b>@Html.Label("Image")</b>
+                                @*<input type="file" id="FileUpload1" />*@
+                                <input asp-for="UploadedFile" class="form-control" multiple="" >
+                                <input type="button" id="btnUpload" class="btn btn-success" value="Upload Files" data-id="@Model.Product.Id"/>
+                                @*@Html.ValidationMessageFor(x => x.Product.DocumentFile.FileName, "", new { @style = "color:red" })*@
+                            </div>
+                        </form>
+
+                        <div id="listProductImageDivAera">
+
+                        </div>
+
 
                     </div>
-                    <div class="form-group">
-                        <b>@Html.Label("Product Description")</b>
-                        @Html.TextBoxFor(x => x.Product.Description, "", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Product.Description, "", new { @style = "color:red" })
-                    </div>
-                    <div class="form-group">
-                        <b>@Html.Label("Brand")</b>
-                        @Html.DropDownListFor(x => x.Product.BrandId, Model.Brands, "---Choose a brand---", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Product.BrandId, "", new { @style = "color:red" })
-                    </div>
-                    <div class="form-group">
-                        <b>@Html.Label("Category")</b>
-                        @Html.DropDownListFor(x => x.Product.CategoryId, Model.Categories, "---Choose a category---", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Product.CategoryId, "", new { @style = "color:red" })
-                    </div>
-                    <div class="form-group">
-                        <b>@Html.Label("Stock")</b>
-                        @Html.TextBoxFor(x => x.Product.Stock, "", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Product.Stock, "", new { @style = "color:red" })
-                    </div>
-                    <div class="form-group">
-                        <b>@Html.Label("Price")</b>
-                        @Html.TextBoxFor(x => x.Product.Price, "", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Product.Price, "", new { @style = "color:red" })
-                    </div>
-                </form>
+                    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -54,8 +90,24 @@
     </div>
 </div>
 
+
+
 <script>
-    //Edit Product - Post
+
+//GET - LIST PRODUCT IMAGE
+    var id = $("#btnUpload").attr("data-id");
+        data = {};
+        data["id"] = id;
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Page("/Catalog/Product", "ListProductImage")',
+                data: { id: id },
+                success: function (data) {
+                    $("#listProductImageDivAera").html(data);
+                }
+            });
+
+//POST - EDIT PRODUCT
     $("#editproductbuttonmodal").click(function (e) {
         //$(document).on("click", "#editproductbuttonmodal", function (e) {
             e.preventDefault();
@@ -72,5 +124,30 @@
                     toastr["success"]("Product Update Successfully!", "Process Success")
                 }
             });
+    });
+
+//POST - ADD PRODUCT IMAGE
+    $("#btnUpload").click(function (evt) {
+        //alert("ok");
+        evt.preventDefault();
+        //var id = $(this).attr("data-id");
+        //data = {};
+        //data["id"] = id;
+        var allData = new FormData(document.forms.fileForm);
+        allData.append('id', $(this).attr("data-id"));
+        $.ajax({
+            url: '@Url.Page("/Catalog/Product", "AddProductImage")',
+            data: allData,
+            contentType: false,
+            processData: false,
+            type: 'post',
+            success: function (data) {
+                $("#listProductImageDivAera").html("");
+                $("#listProductImageDivAera").html(data);
+                toastr["success"]("New Photo Added Successfully!", "Process Success")
+            }
         });
+    });
+
+
 </script>

@@ -16,5 +16,7 @@ namespace TomTomEcommerce.Core
         [Required(ErrorMessage = "Enter a description...")]
         public string Description { get; set; }
 
+        public Category Parent { get; set; }
+        public int? ParentId { get; set; }
     }
 }

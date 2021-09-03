@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using TomTomEcommerce.Core;
 using TomTomEcommerce.EFCore;
@@ -21,6 +22,8 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
 
         [BindProperty(SupportsGet = true)]
         public List<TomTomEcommerce.Core.Category> listmodel { get; set; }
+        public SelectList Categories { get; set; }
+        public TomTomEcommerce.Core.Category Category { get; set; }
 
 
         public PartialViewResult OnGetListCategory()
@@ -36,11 +39,18 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
 
         public PartialViewResult OnGetAddCategory()
         {
+            var categories = tTServiceEFCore.GetCategories();
+            Categories = new SelectList(categories, "Id", "Name");
 
             return new PartialViewResult
             {
-                ViewName = "Category/_AddCategoryForm",
+                ViewName = ("Category/_AddCategoryForm"),
+                ViewData = new ViewDataDictionary<CategoryModel>(ViewData, this)
             };
+            //return new PartialViewResult
+            //{
+            //    ViewName = "Category/_AddCategoryForm",
+            //};
         }
 
         public PartialViewResult OnPostAddCategory(TomTomEcommerce.Core.Category category)

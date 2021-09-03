@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using TomTomEcommerce.Core;
@@ -96,11 +97,54 @@ namespace TomTomEcommerce.EFCore
         public List<Product> ListProduct()
         {
             var model = dbContext.Products
-                .Include(x=>x.Brand)
+                .Include(x => x.Brand)
                 .Include(x => x.Category)
                 .ToList();
+            
+
             return model;
         }
+
+        public List<ProductImage> ListProductImage()
+        {
+                var model = dbContext.ProductImages.ToList();
+                return model;
+        }
+
+        public List<ProductImage> ListProductImageById(int id)
+        {
+
+            var model = dbContext.ProductImages.Where(x => x.ProductId == id).ToList();
+            return model;
+
+        }
+
+
+        public void DeleteProductImageById(int id)
+        {
+            var entity = dbContext.ProductImages.Find(id);
+            dbContext.Remove(entity);
+            dbContext.SaveChanges();
+        }
+
+        public ProductImage FindProductImageById(int id)
+        {
+            var model = dbContext.ProductImages.Find(id);
+            return model;
+        }
+
+        public void AddProductImageById(string imagePath, int id)
+        {
+            ProductImage productImage = new ProductImage();
+            productImage.ProductId = id;
+            productImage.Path = imagePath;
+            productImage.PathSmall = "small/s-" + productImage.Path;
+            productImage.PathMedium = "medium/m-" + productImage.Path;
+            productImage.PathLarge = "large/l-" + productImage.Path;
+            dbContext.ProductImages.Add(productImage);
+            dbContext.SaveChanges();
+        }
+
 
         public void AddNewProduct(Product product)
         {
@@ -125,7 +169,6 @@ namespace TomTomEcommerce.EFCore
             entity.CategoryId = product.CategoryId;
             entity.Stock = product.Stock;
             entity.Price = product.Price;
-
             dbContext.Update(entity);
             dbContext.SaveChanges();
         }
@@ -141,6 +184,8 @@ namespace TomTomEcommerce.EFCore
             var model = dbContext.Categories.ToList();
             return model;
         }
+
+
 
 
     }
