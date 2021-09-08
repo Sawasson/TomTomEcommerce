@@ -22,7 +22,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TomTomEcommerce.EFCore\TomTomEcommerce.EFCore.csproj" />
+    <ProjectReference Include="..\TomTomEcommerce.BackOffice\TomTomEcommerce.BackOffice.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\img\product-img\medium\" />
+    <Folder Include="wwwroot\img\product-img\large\" />
+    <Folder Include="wwwroot\img\product-img\small\" />
   </ItemGroup>
 
 </Project>

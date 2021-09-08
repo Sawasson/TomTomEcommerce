@@ -34,37 +34,6 @@
                             <div class="top_logo">
                                 <a href="#"><img src="img/core-img/logo.png" alt=""></a>
                             </div>
-                            <!-- Cart & Menu Area -->
-                            <div class="header-cart-menu d-flex align-items-center ml-auto">
-                                <!-- Cart Area -->
-                                <div class="cart">
-                                    <a href="#" id="header-cart-btn" target="_blank"><span class="cart_quantity">2</span> <i class="ti-bag"></i> Your Bag $20</a>
-                                    <!-- Cart List Area Start -->
-                                    <ul class="cart-list">
-                                        <li>
-                                            <a href="#" class="image"><img src="img/product-img/product-10.jpg" class="cart-thumb" alt=""></a>
-                                            <div class="cart-item-desc">
-                                                <h6><a href="#">Women's Fashion</a></h6>
-                                                <p>1x - <span class="price">$10</span></p>
-                                            </div>
-                                            <span class="dropdown-product-remove"><i class="icon-cross"></i></span>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="image"><img src="img/product-img/product-11.jpg" class="cart-thumb" alt=""></a>
-                                            <div class="cart-item-desc">
-                                                <h6><a href="#">Women's Fashion</a></h6>
-                                                <p>1x - <span class="price">$10</span></p>
-                                            </div>
-                                            <span class="dropdown-product-remove"><i class="icon-cross"></i></span>
-                                        </li>
-                                        <li class="total">
-                                            <span class="pull-right">Total: $20.00</span>
-                                            <a href="cart.html" class="btn btn-sm btn-cart">Cart</a>
-                                            <a href="checkout-1.html" class="btn btn-sm btn-checkout">Checkout</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -99,8 +68,8 @@
                                                 <a class="dropdown-item" href="index.html">Home</a>
                                                 <a class="dropdown-item" href="/Shop">Shop</a>
                                                 <a class="dropdown-item" href="/Product-Details">Product Details</a>
-                                                <a class="dropdown-item" href="cart.html">Cart</a>
-                                                <a class="dropdown-item" href="checkout.html">Checkout</a>
+                                                <a class="dropdown-item" href="/Cart">Cart</a>
+                                                <a class="dropdown-item" href="/Checkout">Checkout</a>
                                             </div>
                                         </li>
                                         <li class="nav-item"><a class="nav-link" href="#">Dresses</a></li>
@@ -202,9 +171,8 @@
         </div>
     </footer>
     <!-- ****** Footer Area End ****** -->
-
-
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
+
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
     <!-- Popper js -->
     <script src="js/popper.min.js"></script>
@@ -214,6 +182,8 @@
     <script src="js/plugins.js"></script>
     <!-- Active js -->
     <script src="js/active.js"></script>
+
+
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

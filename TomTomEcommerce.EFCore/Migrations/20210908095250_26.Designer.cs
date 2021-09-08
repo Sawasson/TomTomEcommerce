@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TomTomEcommerce.EFCore;
 
 namespace TomTomEcommerce.EFCore.Migrations
 {
     [DbContext(typeof(TTContext))]
-    partial class TTContextModelSnapshot : ModelSnapshot
+    [Migration("20210908095250_26")]
+    partial class _26
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,6 +47,9 @@ namespace TomTomEcommerce.EFCore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
+
+                    b.Property<double>("TotalPrice")
+                        .HasColumnType("float");
 
                     b.Property<int>("UserID")
                         .HasColumnType("int");

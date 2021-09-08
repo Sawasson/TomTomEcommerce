@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TomTomEcommerce.EFCore;
 
 namespace TomTomEcommerce.EFCore.Migrations
 {
     [DbContext(typeof(TTContext))]
-    partial class TTContextModelSnapshot : ModelSnapshot
+    [Migration("20210906080043_21")]
+    partial class _21
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,24 +48,6 @@ namespace TomTomEcommerce.EFCore.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Carts");
-                });
-
-            modelBuilder.Entity("TomTomEcommerce.Core.CartProduct", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("CartId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
@@ -72,9 +56,7 @@ namespace TomTomEcommerce.EFCore.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("CartProducts");
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("TomTomEcommerce.Core.Category", b =>
@@ -165,17 +147,6 @@ namespace TomTomEcommerce.EFCore.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductImages");
-                });
-
-            modelBuilder.Entity("TomTomEcommerce.Core.CartProduct", b =>
-                {
-                    b.HasOne("TomTomEcommerce.Core.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("TomTomEcommerce.Core.Category", b =>

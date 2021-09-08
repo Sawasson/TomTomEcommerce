@@ -19,9 +19,11 @@ namespace TomTomEcommerce.Core
         public string Description { get; set; }
 
         public Brand Brand { get; set; }
+        [Required(ErrorMessage = "Choose a brand...")]
         public int BrandId { get; set; }
 
         public Category Category { get; set; }
+        [Required(ErrorMessage = "Choose a category...")]
         public int CategoryId { get; set; }
 
 

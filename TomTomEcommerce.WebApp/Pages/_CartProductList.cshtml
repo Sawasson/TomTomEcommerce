@@ -1,0 +1,82 @@
+﻿@model CartModel
+@using TomTomEcommerce.BackOffice;
+
+<table class="table table-responsive">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.CartProducts)
+        {
+        <tr>
+            <td class="cart_product_img d-flex align-items-center">
+                <a href="#"><img src="img/product-img/@item.Product.ProductImages.FirstOrDefault().PathSmall" alt="@item.Product.Name"></a>
+                <h6>@item.Product.Name</h6>
+            </td>
+            <td class="price"><span>$@item.Product.Price</span></td>
+            <td class="qty">
+                <div class="quantity">
+                    <span class="qty-minus"><i id="qty-minus_@item.Id"  data-id="@item.Id" class="fa fa-minus" aria-hidden="true"></i></span>
+                    <input class="qty-text" id="qty" step="1" min="1" max="99" name="quantity" value="@item.Quantity">
+                    <span class="qty-plus"><i id="qty-plus_@item.Id" data-id="@item.Id" class="fa fa-plus" aria-hidden="true"></i></span>
+                </div>
+            </td>
+            @{ var total = item.Product.Price * item.Quantity;}
+            <td class="total_price"><span>$@total</span></td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+
+    //GET - QUANTITY CARTPRODUCT
+
+    $('[id^=qty-plus]').click(function () {
+        var id = $(this).attr("data-id");
+        data = {};
+        data["id"] = id;
+
+
+        $.ajax({
+            type: 'Get',
+            url: '@Url.Page("Cart", "PlusCartProduct")',
+            data: { id: id },
+            success: function (data) {
+                $("#cartProductListArea").html("");
+                $("#cartProductListArea").html(data);
+
+            }
+
+
+        });
+    });
+
+
+        $('[id^=qty-minus]').click(function () {
+        var id = $(this).attr("data-id");
+        data = {};
+        data["id"] = id;
+
+
+        $.ajax({
+            type: 'Get',
+            url: '@Url.Page("Cart", "MinusCartProduct")',
+            data: { id: id },
+            success: function (data) {
+                $("#cartProductListArea").html("");
+                $("#cartProductListArea").html(data);
+
+            }
+
+
+        });
+    });
+
+
+</script>

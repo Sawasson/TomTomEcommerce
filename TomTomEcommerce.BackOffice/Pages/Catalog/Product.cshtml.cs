@@ -107,18 +107,38 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
                 {
                     file.CopyTo(filestream);
                 }
-                var path = "wwwroot\\img\\" + newImageName;
-                var img = Image.FromFile(path);
+                var img1 = Image.FromFile(fullFilePath);
+                var smallscale1 = ImageResize.Scale(img1, 100, 100);
+                var smallscalepath1 = filePath + "\\" + "small" + "\\" + "s-" + newImageName;
+                //var mediumscale = ImageResize.Scale(img, 200, 200);
+                //var mediumscalepath = filePath + "\\" + "medium" + "\\" + "m-" + newImageName;
+                //var largescale = ImageResize.Scale(img, 800, 800);
+                //var largescalepath = filePath + "\\" + "large" + "\\" + "l-" + newImageName;
+
+                smallscale1.SaveAs(smallscalepath1);
+                //mediumscale.SaveAs(mediumscalepath);
+                //largescale.SaveAs(largescalepath);
+
+                var filePathForWebApp = "C:\\Projects\\TomTomEcommerce\\TomTomEcommerce.WebApp\\wwwroot\\img\\product-img";
+                var fullFilePathForWebApp = Path.Combine(filePathForWebApp, newImageName);
+                using (var filestreamForWebApp = new FileStream(fullFilePathForWebApp, FileMode.Create))
+                {
+                    file.CopyTo(filestreamForWebApp);
+                }
+
+                var img = Image.FromFile(fullFilePath);
                 var smallscale = ImageResize.Scale(img, 100, 100);
-                var smallscalepath = filePath + "\\" + "small" + "\\" + "s-" + newImageName;
+                var smallscalepath = filePathForWebApp + "\\" + "small" + "\\" + "s-" + newImageName;
                 var mediumscale = ImageResize.Scale(img, 200, 200);
-                var mediumscalepath = filePath + "\\" + "medium" + "\\" + "m-" + newImageName;
+                var mediumscalepath = filePathForWebApp + "\\" + "medium" + "\\" + "m-" + newImageName;
                 var largescale = ImageResize.Scale(img, 800, 800);
-                var largescalepath = filePath + "\\" + "large" + "\\" + "l-" + newImageName;
+                var largescalepath = filePathForWebApp + "\\" + "large" + "\\" + "l-" + newImageName;
 
                 smallscale.SaveAs(smallscalepath);
                 mediumscale.SaveAs(mediumscalepath);
                 largescale.SaveAs(largescalepath);
+
+
                 tTServiceEFCore.AddProductImageById(newImageName, id);
 
             }

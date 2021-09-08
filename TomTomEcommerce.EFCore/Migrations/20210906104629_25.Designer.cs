@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TomTomEcommerce.EFCore;
 
 namespace TomTomEcommerce.EFCore.Migrations
 {
     [DbContext(typeof(TTContext))]
-    partial class TTContextModelSnapshot : ModelSnapshot
+    [Migration("20210906104629_25")]
+    partial class _25
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,8 +73,6 @@ namespace TomTomEcommerce.EFCore.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("CartProducts");
                 });
@@ -165,17 +165,6 @@ namespace TomTomEcommerce.EFCore.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductImages");
-                });
-
-            modelBuilder.Entity("TomTomEcommerce.Core.CartProduct", b =>
-                {
-                    b.HasOne("TomTomEcommerce.Core.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("TomTomEcommerce.Core.Category", b =>

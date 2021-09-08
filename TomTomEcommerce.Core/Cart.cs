@@ -4,7 +4,10 @@ using System.Text;
 
 namespace TomTomEcommerce.Core
 {
-    class Basket
+    public class Cart
     {
+        public int Id { get; set; }
+        public int UserID { get; set; }
+
     }
 }
