@@ -50,15 +50,15 @@ namespace TomTomEcommerce.EFCore
         }
 
 
-        public Cart GetCart()
+        public Cart GetCart(int userId)
         {
-            var entity = dbContext.Carts.FirstOrDefault();
+            var entity = dbContext.Carts.Where(x=>x.UserID==userId).SingleOrDefault();
             return entity;
         }
 
         public CartProduct GetCartProduct(int id)
         {
-            var entity = dbContext.CartProducts.Find(id);
+            var entity = dbContext.CartProducts.Where(x=>x.ProductId == id).FirstOrDefault();
             return entity;
         }
 
@@ -66,49 +66,81 @@ namespace TomTomEcommerce.EFCore
         {
             var entity = dbContext.CartProducts.Find(id);
             entity.Quantity++;
+            dbContext.Update(entity);
             dbContext.SaveChanges();
         }
 
+
         public void MinusCartProduct(int id)
         {
+            
             var entity = dbContext.CartProducts.Find(id);
             entity.Quantity--;
 
             if (entity.Quantity == 0)
             {
                 dbContext.Remove(entity);
-                dbContext.SaveChanges();
-
+            }
+            else
+            {
+                dbContext.Update(entity);
             }
             dbContext.SaveChanges();
         }
 
-        public void AddProductToCart(int productId)
+        public void AddProductToCart(int productId, int userId)
         {
-
-            var entity = GetCartProduct(productId);
-            if (entity==null)
+            var anyCart = dbContext.Carts.Where(x => x.UserID == userId).SingleOrDefault();
+            if (anyCart==null)
             {
+                Cart cart = new Cart();
+                cart.UserID = userId;
+                dbContext.Carts.Add(cart);
+                dbContext.SaveChanges();
+
                 CartProduct cartProduct = new CartProduct();
-                cartProduct.CartId = 6;
                 cartProduct.ProductId = productId;
                 cartProduct.Quantity = 1;
+                cartProduct.CartId = cart.Id;
                 dbContext.CartProducts.Add(cartProduct);
             }
             else
             {
-                entity.Quantity++;
+                var entity = GetCartProduct(productId);
+                if (entity == null)
+                {
+                    CartProduct cartProduct = new CartProduct();
+                    cartProduct.ProductId = productId;
+                    cartProduct.Quantity = 1;
+                    Cart cart = dbContext.Carts.Where(x => x.UserID == userId).SingleOrDefault();
+                    cartProduct.CartId = cart.Id;
+                    dbContext.CartProducts.Add(cartProduct);
+                }
+                else
+                {
+                    entity.Quantity++;
+                }
             }
+            
 
             dbContext.SaveChanges();
         }
 
-        public List<CartProduct> CartProductListByCartId()
+        public List<CartProduct> CartProductListByCartId(int userId)
         {
-            var entity = dbContext.CartProducts.Where(x => x.CartId == 6)
-                .Include(x=>x.Product.ProductImages)
+            var anyCart = dbContext.Carts.Where(x => x.UserID == userId).SingleOrDefault();
+            if (anyCart==null)
+            {
+                return null;
+            }
+            else
+            {
+                var entity = dbContext.CartProducts.Where(x => x.CartId == anyCart.Id)
+                .Include(x => x.Product.ProductImages)
                 .ToList();
-            return entity;
+                return entity;
+            }
+            
         }
 
 
@@ -129,9 +161,9 @@ namespace TomTomEcommerce.EFCore
         //}
 
 
-        public void ClearCart()
+        public void ClearCart(int userId)
         {
-            var entity = GetCart();
+            var entity = GetCart(userId);
             var cartProducts = dbContext.CartProducts.Where(x => x.CartId == entity.Id).ToList();
             foreach (var cartProduct in cartProducts)
             {

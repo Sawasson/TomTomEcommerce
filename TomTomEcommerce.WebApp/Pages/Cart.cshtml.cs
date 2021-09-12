@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -32,17 +34,21 @@ namespace TomTomEcommerce.WebApp.Pages
         public List<CartProduct> CartProducts { get; set; }
 
 
-
         public PageResult OnGet()
         {
-            CartProducts = tTWebServiceEFCore.CartProductListByCartId();
+            //var claims = HttpContext.User.Claims;
+            //var userId = Convert.ToInt32(claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            //CartProducts = tTWebServiceEFCore.CartProductListByCartId(userId);
+
             return Page();
              
         }
 
         public PartialViewResult OnGetCartProductList()
         {
-            CartProducts = tTWebServiceEFCore.CartProductListByCartId();
+            var claims = HttpContext.User.Claims;
+            var userId = Convert.ToInt32(claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            CartProducts = tTWebServiceEFCore.CartProductListByCartId(userId);
 
             return new PartialViewResult
             {
@@ -54,33 +60,20 @@ namespace TomTomEcommerce.WebApp.Pages
 
 
 
-        public PartialViewResult OnGetHeaderCartMenu()
-        {
-            Cart = tTWebServiceEFCore.GetCart();
-            if (Cart != null)
-            {
-                //Product = tTServiceEFCore.FindProduct(Cart.ProductId);
-                //ProductImages = tTServiceEFCore.ListProductImageById(Cart.ProductId);
-            }
-            
-
-            return new PartialViewResult
-            {
-                ViewName = "_HeaderCartMenu",
-                ViewData = new ViewDataDictionary<CartModel>(ViewData, this)
-            };
-        }
-
         public void OnPostAddToCart(int productId)
         {
-            tTWebServiceEFCore.AddProductToCart(productId);
+            var claims = HttpContext.User.Claims;
+            var userId = Convert.ToInt32(claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            tTWebServiceEFCore.AddProductToCart(productId, userId);
         }
 
         public PartialViewResult OnGetPlusCartProduct(int id)
         {
             tTWebServiceEFCore.PlusCartProduct(id);
 
-            CartProducts = tTWebServiceEFCore.CartProductListByCartId();
+            var claims = HttpContext.User.Claims;
+            var userId = Convert.ToInt32(claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            CartProducts = tTWebServiceEFCore.CartProductListByCartId(userId);
 
             return new PartialViewResult
             {
@@ -93,7 +86,9 @@ namespace TomTomEcommerce.WebApp.Pages
         {
             tTWebServiceEFCore.MinusCartProduct(id);
 
-            CartProducts = tTWebServiceEFCore.CartProductListByCartId();
+            var claims = HttpContext.User.Claims;
+            var userId = Convert.ToInt32(claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            CartProducts = tTWebServiceEFCore.CartProductListByCartId(userId);
 
             return new PartialViewResult
             {
@@ -104,9 +99,12 @@ namespace TomTomEcommerce.WebApp.Pages
 
         public PartialViewResult OnPostClearCart()
         {
-            tTWebServiceEFCore.ClearCart();
+            var claims = HttpContext.User.Claims;
+            var userId = Convert.ToInt32(claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            tTWebServiceEFCore.ClearCart(userId);
 
-            CartProducts = tTWebServiceEFCore.CartProductListByCartId();
+            
+            CartProducts = tTWebServiceEFCore.CartProductListByCartId(userId);
 
             return new PartialViewResult
             {

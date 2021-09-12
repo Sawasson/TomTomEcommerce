@@ -548,6 +548,31 @@ img {
     font-weight: 600;
 }
 
+.add-address a {
+    width: auto;
+    height: 70px;
+    padding: 0 100px;
+    text-align:center;
+    background-color: #ff084e;
+    color: #fff;
+    display: block;
+    line-height: 70px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.cart-logo a {
+    width: auto;
+    height: 35px;
+    padding: 0 30px;
+    background-color: #ff084e;
+    color: #fff;
+    display: block;
+    line-height: 35px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
 .help-line a:hover,
 .help-line a:focus {
     background-color: #3a3a3a;

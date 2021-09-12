@@ -3,50 +3,23 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TomTomEcommerce.EFCore;
 
 namespace TomTomEcommerce.EFCore.Migrations
 {
     [DbContext(typeof(TTContext))]
-    partial class TTContextModelSnapshot : ModelSnapshot
+    [Migration("20210908113817_28")]
+    partial class _28
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.8");
-
-            modelBuilder.Entity("TomTomEcommerce.Core.Adress", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DistrictId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Adresses");
-                });
 
             modelBuilder.Entity("TomTomEcommerce.Core.Brand", b =>
                 {
@@ -129,41 +102,6 @@ namespace TomTomEcommerce.EFCore.Migrations
                     b.HasIndex("ParentId");
 
                     b.ToTable("Categories");
-                });
-
-            modelBuilder.Entity("TomTomEcommerce.Core.City", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Cities");
-                });
-
-            modelBuilder.Entity("TomTomEcommerce.Core.District", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CityId");
-
-                    b.ToTable("Districts");
                 });
 
             modelBuilder.Entity("TomTomEcommerce.Core.Product", b =>
@@ -261,15 +199,6 @@ namespace TomTomEcommerce.EFCore.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TomTomEcommerce.Core.Adress", b =>
-                {
-                    b.HasOne("TomTomEcommerce.Core.User", null)
-                        .WithMany("Adresses")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("TomTomEcommerce.Core.CartProduct", b =>
                 {
                     b.HasOne("TomTomEcommerce.Core.Product", "Product")
@@ -288,17 +217,6 @@ namespace TomTomEcommerce.EFCore.Migrations
                         .HasForeignKey("ParentId");
 
                     b.Navigation("Parent");
-                });
-
-            modelBuilder.Entity("TomTomEcommerce.Core.District", b =>
-                {
-                    b.HasOne("TomTomEcommerce.Core.City", "City")
-                        .WithMany()
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("City");
                 });
 
             modelBuilder.Entity("TomTomEcommerce.Core.Product", b =>
@@ -334,11 +252,6 @@ namespace TomTomEcommerce.EFCore.Migrations
             modelBuilder.Entity("TomTomEcommerce.Core.Product", b =>
                 {
                     b.Navigation("ProductImages");
-                });
-
-            modelBuilder.Entity("TomTomEcommerce.Core.User", b =>
-                {
-                    b.Navigation("Adresses");
                 });
 #pragma warning restore 612, 618
         }

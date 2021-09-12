@@ -16,6 +16,11 @@ namespace TomTomEcommerce.EFCore
         public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartProduct> CartProducts { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Adress> Adresses { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<District> Districts { get; set; }
+
 
     }
 }
