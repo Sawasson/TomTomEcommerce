@@ -20,6 +20,8 @@ namespace TomTomEcommerce.EFCore
         public DbSet<Adress> Adresses { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<District> Districts { get; set; }
+        public DbSet<Ship> Ships { get; set; }
+
 
 
     }

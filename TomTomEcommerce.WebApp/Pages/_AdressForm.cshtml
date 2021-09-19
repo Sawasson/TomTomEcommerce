@@ -1,0 +1,127 @@
+﻿@model TomTomEcommerce.WebApp.Pages.OrderModel
+
+<div class="checkout_details_area mt-50 clearfix">
+
+    <div class="cart-page-heading">
+        <h5>Billing Address</h5>
+    </div>
+
+
+    <form asp-page-handler="LoginUser" method="post">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <label for="email_address">Adress Title <span>*</span></label>
+                @Html.TextBoxFor(x => x.Adress.Title, "", new { @class = "form-control" })
+            </div>
+            <div class="col-12 mb-4">
+                <label for="password">Adress Line <span>*</span></label>
+                @Html.TextBoxFor(x => x.Adress.Description, new { @class = "form-control" })
+            </div>
+            <div class="col-12 mb-4">
+                <label for="password">City <span>*</span></label>
+                @Html.DropDownList("CityId", Model.Cities, "---Choose a brand---", new { @class = "form-control" })
+            </div>
+            <div class="col-12 mb-4">
+                <label for="password">District <span>*</span></label>
+                @Html.DropDownList("DistrictId", Enumerable.Empty<SelectListItem>(), "---Choose a brand---", new { @class = "form-control" })
+            </div>
+            <div class="col-12">
+            </div>
+            <div class="col-12" style="padding-top:10px">
+
+                <button type="submit" href="#" class="btn karl-checkout-btn"><i class="ti-home"></i> Add New Adress</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Kategori seçildiğinde bu fonksiyonumuz çalışmaya başlayacaktır.
+        $('#CityId').change(function () {
+            @*var token = @HttpContext.GetAntiforgeryToken();*@
+
+            // Seçilen Kategorinin ID sini alıyoruz.
+            var CityId = $(this).val();
+            alert(CityId);
+            /*Seçilen KategoriID sini kullanarak
+            Kategori(Controller) sınıfı içerisindeki AltKategorileriGetir Action metodunu çağırıyoruz.
+            Bu metoddan dönen liste sayesinde .each fonksiyonu ile
+            AltKategori isimli DropDownList nesnesini dolduruyoruz.*/
+            if (CityId != null && CityId != '') {
+                $.ajax({
+                    type: "post",
+                    url: '@Url.Page("Order", "GetDistricts")',
+                    data: { CityId: CityId },
+                    success: function (districts) {
+                        alert("success");
+                        $.each(districts, function (index, district) {
+                            $('#DistrictId').append($('<option/>', {
+                                value: district.Id,
+                                text: district.Name
+                            }));
+                        });
+                    },
+                    headers:
+                    {
+                        "RequestVerificationToken": token
+                    },
+                    error: function () {
+                        /*Bu metod ile Ajax işlemi başarısız
+                        olursa eğer hata mesajı verebiliyoruz.*/
+                        alert("Hata");
+                    },
+                    beforeSend: function () {
+                        /*Burada ise Form Post edilmeden önce
+                        işlemler yapılabilir.Örnek olarak Loading, yükleniyor vs..*/
+                    },
+                    complete: function () {
+                        /*Burada ise Form Post edildikten sonra
+                        işlemler yapılabilir.Örnek olarak yükleme tamamlandı vs..*/
+                    }
+                });
+            }
+        });
+    });
+</script>
+@*<script type="text/javascript">
+                    @if (Model!=null && Model.Adress.CityId>0)
+                {
+                    @:BindDistricts(@Model.Adress.CityId);
+                    @:$("#DistrictId").val('@Model.Adress.DistrictId');
+
+                }
+
+                $('#CityId').change(function () {
+                    var cityId = $(this).val();
+                    BindDistricts(cityId);
+
+                });
+            });
+
+
+            function BindDistricts(cityId) {
+                if (cityId != null && cityId != '') {
+                    $.ajax({
+                        type: "post",
+                        url: '@Url.Page("Order", "GetDistricts")',
+                        data: { CityId: cityId },
+                        success: function (districts) {
+                            $('#DistrictId').empty();
+                            $.each(districts, function (index, district) {
+                                $('#DistrictId').append($('<option/>', {
+                                    value: district.id,
+                                    text: district.name
+                                }));
+                            });
+                        },
+                        error: function () {
+                            alert("Hata");
+                        }
+                    });
+                }
+            }
+    </script>*@

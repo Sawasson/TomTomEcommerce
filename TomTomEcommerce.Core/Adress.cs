@@ -12,7 +12,11 @@ namespace TomTomEcommerce.Core
         public int UserId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public int CityId { get; set; }
-        public int DistrictId { get; set; }
+
+        public City City { get; set; }
+        public int? CityId { get; set; }
+
+        public District District { get; set; }
+        public int? DistrictId { get; set; }
     }
 }

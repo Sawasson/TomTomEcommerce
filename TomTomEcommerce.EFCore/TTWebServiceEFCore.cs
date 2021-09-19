@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Antiforgery;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -144,22 +146,6 @@ namespace TomTomEcommerce.EFCore
         }
 
 
-        //public void CartTotalPrice()
-        //{
-        //    var entity = dbContext.CartProducts.Where(x => x.CartId == 6).ToList();
-
-        //    foreach (var item in entity)
-        //    {
-        //        var price = (item.Product.Price) * (item.Quantity);
-        //        double total = 0;
-        //        total = total + price;
-        //        var cart = GetCart();
-        //        cart.TotalPrice = total;
-        //    }
-            
-
-        //}
-
 
         public void ClearCart(int userId)
         {
@@ -173,5 +159,20 @@ namespace TomTomEcommerce.EFCore
             dbContext.SaveChanges();
         }
 
+        public void AddAdress(Adress adress)
+        {
+            dbContext.Add(adress);
+            dbContext.SaveChanges();
+        }
+
+        public List<Adress> ListAdresses(int userId)
+        {
+            var entity = dbContext.Adresses.Where(x => x.UserId == userId)
+                .Include(x => x.City)
+                .Include(x => x.District)
+                .ToList();
+
+            return entity;
+        }
     }
 }
