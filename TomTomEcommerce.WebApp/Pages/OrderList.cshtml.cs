@@ -40,7 +40,6 @@ namespace TomTomEcommerce.WebApp.Pages
             var userId = Convert.ToInt32(claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
             Orders = tTWebServiceEFCore.OrderList(userId);
 
-            CartProducts = tTWebServiceEFCore.CartProductListByCartId(userId);
 
         }
     }

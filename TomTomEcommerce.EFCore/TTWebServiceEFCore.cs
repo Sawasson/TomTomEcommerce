@@ -153,6 +153,14 @@ namespace TomTomEcommerce.EFCore
             dbContext.Orders.Add(order);
             dbContext.SaveChanges();
 
+            var orderId = dbContext.Orders.Where(x => x.OrderDate == order.OrderDate).FirstOrDefault().Id;
+
+            foreach (var item in order.cartProducts)
+            {
+                item.OrderId = orderId;
+                dbContext.SaveChanges();
+            }
+
             var cart = dbContext.Carts.Where(x => x.UserID == userId).SingleOrDefault();
             dbContext.Remove(cart);
             dbContext.SaveChanges();
@@ -168,9 +176,20 @@ namespace TomTomEcommerce.EFCore
                 .Include(x => x.Adress.City)
                 .Include(x=>x.User)
                 .ToList();
+            foreach (var item in entity)
+            {
+                var cartProductList = dbContext.CartProducts.Where(x => x.OrderId == item.Id)
+                    .Include(x => x.Product)
+                    .Include(x => x.Product.ProductImages)
+                    .ToList();
+                item.cartProducts = cartProductList;
+            }
             return entity;
 
         }
+
+
+
 
         public List<CartProduct> CartProductListByCartId(int userId)
         {

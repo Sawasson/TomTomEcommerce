@@ -69,6 +69,13 @@ namespace TomTomEcommerce.WebApp.Pages
             var userId = Convert.ToInt32(claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
             tTWebServiceEFCore.NewOrder(adress, userId);
 
+
+            var cities = tTLocationService.GetCities();
+            Cities = new SelectList(cities, "Id", "Name");
+
+            CartProducts = tTWebServiceEFCore.CartProductListByCartId(userId);
+
+            Adresses = tTWebServiceEFCore.ListAdresses(userId);
             return Page();
 
 
