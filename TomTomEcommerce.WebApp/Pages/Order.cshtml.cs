@@ -38,6 +38,11 @@ namespace TomTomEcommerce.WebApp.Pages
         public SelectList Cities { get; set; }
         public SelectList Districts { get; set; }
         public Order Order { get; set; }
+        public List<CartProduct> CartProducts { get; set; }
+        public List<Order> Orders { get; set; }
+
+
+
 
 
 
@@ -49,7 +54,20 @@ namespace TomTomEcommerce.WebApp.Pages
             var cities = tTLocationService.GetCities();
             Cities = new SelectList(cities, "Id", "Name");
 
+            CartProducts = tTWebServiceEFCore.CartProductListByCartId(userId);
+
             Adresses = tTWebServiceEFCore.ListAdresses(userId);
+
+            return Page();
+
+
+        }
+
+        public PageResult OnPost(int adress)
+        {
+            var claims = HttpContext.User.Claims;
+            var userId = Convert.ToInt32(claims.SingleOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            tTWebServiceEFCore.NewOrder(adress, userId);
 
             return Page();
 
@@ -81,11 +99,22 @@ namespace TomTomEcommerce.WebApp.Pages
             return new RedirectToPageResult("Order");
         }
 
+
+        public RedirectToPageResult OnPostDeleteAdress(int id)
+        {
+            tTWebServiceEFCore.DeleteAdress(id);
+            return new RedirectToPageResult("Order");
+        }
+
         public JsonResult OnPostGetDistricts(int CityId)
         {
             var districts = tTLocationService.GetDistrictsByCityId(CityId);
             return new JsonResult(districts);
         }
+
+
+
+
 
 
     }

@@ -1,0 +1,57 @@
+﻿@page
+@model TomTomEcommerce.WebApp.Pages.OrderListModel
+@{
+}
+<div class="cart_area section_padding_100 clearfix">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="cart-table clearfix">
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Adress</th>
+                                <th>Order Id</th>
+                                <th>Products</th>
+                                <th>Date</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Orders)
+                            {
+                            <tr>
+                                <td>
+                                    <label><span></span><span>@item.Adress.Description</span><span></span></label>
+                                    <br />
+                                    <label><span></span><span>@item.Adress.District.Name / @item.Adress.City.Name</span><span></span></label>
+                                </td>
+                                <td>@item.Id</td>
+                                <td>
+                                    @foreach (var product in item.cartProducts)
+                                    {
+                                        var total = product.Product.Price * product.Quantity;
+                                        <span><img src="img/product-img/@product.Product.ProductImages.FirstOrDefault().PathSmall" /></span><span>@product.Product.Name</span><span>@product.Quantity</span> <span>$@total</span>
+
+                                    }
+                                </td>
+                                    <td>@item.OrderDate</td>
+                                    <td>@item.TotalPrice</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="cart-footer d-flex mt-30">
+                    <div class="back-to-shop w-50">
+                        <a href="Shop">Continue shooping</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        
+    </div>
+</div>

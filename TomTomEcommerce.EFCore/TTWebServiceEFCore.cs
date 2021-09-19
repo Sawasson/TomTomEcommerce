@@ -128,6 +128,50 @@ namespace TomTomEcommerce.EFCore
             dbContext.SaveChanges();
         }
 
+        public void DeleteAdress(int id)
+        {
+            var entity = dbContext.Adresses.Find(id);
+            dbContext.Adresses.Remove(entity);
+            dbContext.SaveChanges();
+        }
+
+        public void NewOrder(int adressId, int userId)
+        {
+            Order order = new Order();
+            order.AdressId = adressId;
+            order.OrderDate = DateTime.Now;
+            order.cartProducts = CartProductListByCartId(userId);
+            double totalPrice = 0;
+            foreach (var item in order.cartProducts)
+            {
+                double totalProductPrice = item.Product.Price * item.Quantity;
+                totalPrice = totalPrice + totalProductPrice;
+            }
+
+            order.TotalPrice = totalPrice;
+            order.UserId = userId;
+            dbContext.Orders.Add(order);
+            dbContext.SaveChanges();
+
+            var cart = dbContext.Carts.Where(x => x.UserID == userId).SingleOrDefault();
+            dbContext.Remove(cart);
+            dbContext.SaveChanges();
+
+
+        }
+
+        public List<Order> OrderList(int userId)
+        {
+            var entity = dbContext.Orders.Where(x => x.UserId == userId)
+                .Include(x=>x.Adress)
+                .Include(x => x.Adress.District)
+                .Include(x => x.Adress.City)
+                .Include(x=>x.User)
+                .ToList();
+            return entity;
+
+        }
+
         public List<CartProduct> CartProductListByCartId(int userId)
         {
             var anyCart = dbContext.Carts.Where(x => x.UserID == userId).SingleOrDefault();
@@ -144,7 +188,6 @@ namespace TomTomEcommerce.EFCore
             }
             
         }
-
 
 
         public void ClearCart(int userId)

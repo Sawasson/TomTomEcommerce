@@ -22,15 +22,22 @@
                             @{ int i = 0;}
                             @foreach (var item in Model.Adresses)
                             {
-                        <div class="custom-control custom-radio mb-15">
-                            <input type="radio" id="customRadio@(i)" name="customRadio" class="custom-control-input">
-                            <label class="custom-control-label d-flex align-items-center justify-content-between" id="radioButton_@item.Id" data-id="@item.Id" for="customRadio@(i)"><span><b>@item.Title</b></span><span></span><span></span></label>
-                            <label><span></span><span>@item.Description</span><span></span></label>
-                            <br />
-                            <label><span></span><span>@item.District.Name / @item.City.Name</span><span></span></label>
+                        <div class="row">
+                            <div class="col-10">
 
+                                <div class="custom-control custom-radio mb-15">
+                                    <input type="radio" id="customRadio@(i)" name="customRadio" class="custom-control-input">
+                                    <label class="custom-control-label d-flex align-items-center justify-content-between" id="radioButton_@item.Id" data-id="@item.Id" for="customRadio@(i)"><span><b>@item.Title</b></span><span></span><span></span></label>
+                                    <label><span></span><span>@item.Description</span><span></span></label>
+                                    <br />
+                                    <label><span></span><span>@item.District.Name / @item.City.Name</span><span></span></label>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <button id="deleteAdressBtn" data-id="@item.Id" class="btn btn-danger"><i class="ti-trash"></i></button>
+                            </div>
                         </div>
-                                i++;
+                            i++;
                             }
 
                         </div>
@@ -42,7 +49,7 @@
                         </div>
 
                         <p>
-                            <a class="btn karl-checkout-btn" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            <a class="btn karl-checkout-btn" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="ti-plus"></i>
                                 Add New Adress
                             </a>
                         </p>
@@ -72,7 +79,7 @@
                                         <div class="col-12" style="padding-top:10px">
 
 
-                                            <button type="submit" class="btn karl-checkout-btn"><i class="ti-home"></i> Add New Adress</button>
+                                            <button type="submit" class="btn karl-checkout-btn"><i class="ti-home"></i> Add Adress</button>
                                         </div>
                                     </div>
 
@@ -91,15 +98,21 @@
                         <h5>Your Order</h5>
                         <p>The Details</p>
                     </div>
-
-                    <ul class="order-details-form mb-4">
-                        <li><span>Product</span> <span>Total</span></li>
-                        <li><span>Cocktail Yellow dress</span> <span>$59.90</span></li>
-                        <li><span>Subtotal</span> <span>$59.90</span></li>
-                        <li><span>Shipping</span> <span>Free</span></li>
-                        <li><span>Total</span> <span>$59.90</span></li>
-                    </ul>
-
+                    <b>
+                        <ul class="order-details-form mb-4">
+                            <li><span>Product</span> <span>Total</span></li>
+                            @{ double totalPrice = 0;}
+                            @foreach (var item in Model.CartProducts)
+                            {
+                                var total = item.Product.Price * item.Quantity;
+                                totalPrice = totalPrice + total;
+                                <li><span><img src="img/product-img/@item.Product.ProductImages.FirstOrDefault().PathSmall" /></span><span>@item.Product.Name</span><span>@item.Quantity</span> <span>$@total</span></li>
+                            }
+                            <li><span>Subtotal</span> <span>$@totalPrice</span></li>
+                            <li><span>Shipping</span> <span>Free</span></li>
+                            <li><span>Total</span> <span>$@totalPrice</span></li>
+                        </ul>
+                    </b>
 
                     <div id="accordion" role="tablist" class="mb-4">
                         <div class="card">
@@ -168,18 +181,44 @@
 
         $(document).ready(function () {
 
-            $('[id^=radioButton_]').click(function () {
-                var id = $(this).attr("data-id");
+            var adid = null;
 
-                alert(id);
+            $('[id^=radioButton_]').click(function () {
+                var adressId = $(this).attr("data-id");
+                alert(adressId);
+                adid = adressId;
+            });
+
+
+            $(document).on("click", "#orderButton", function (e) {
+                //alert("ok");
+                var token = '@HttpContext.GetAntiforgeryToken()';
+                data = {};
+
+
+                //  alert(id);
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Page("Order", "")',
+                    data: { adress: adid },
+                    success: function () {
+
+                    },
+                    error: function myfunction(a, b, c, d, e, f) {
+
+                    },
+                    headers:
+                    {
+                        "RequestVerificationToken": token
+                    }
+
+                });
+
             });
 
 
 
-
-
-
-
+        //DISTRICT SELECT
             $('#Adress_CityId').change(function () {
                 var cityId = $(this).val();
                 //alert(cityId);
@@ -211,7 +250,57 @@
                     });
                 }
             });
+
+
+
+//POST - DELETE ADRESS
+            $(document).on("click", "#deleteAdressBtn", function (e) {
+                var id = $(this).attr("data-id");
+                var token = '@HttpContext.GetAntiforgeryToken()';
+                data = {};
+                data["id"] = id;
+
+
+                //  alert(id);
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Page("Order", "DeleteAdress")',
+                    data: { id: id },
+                    success: function () {
+
+                    },
+                    error: function myfunction(a, b, c, d, e, f) {
+
+                    },
+                    headers:
+                    {
+                        "RequestVerificationToken": token
+                    }
+
+                });
+
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         });
+
+
+
+
+
     </script>
 
     }

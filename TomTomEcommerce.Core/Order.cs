@@ -11,10 +11,12 @@ namespace TomTomEcommerce.Core
         public int Id { get; set; }
 
         public User User { get; set; }
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
+
+        public List<CartProduct> cartProducts { get; set; }
 
         public Adress Adress { get; set; }
-        public int AdressId { get; set; }
+        public int? AdressId { get; set; }
 
 
         public DateTime OrderDate { get; set; }
