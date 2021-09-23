@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 
 namespace TomTomEcommerce.BackOffice
 {
@@ -27,11 +29,15 @@ namespace TomTomEcommerce.BackOffice
             services.AddRazorPages().AddRazorRuntimeCompilation();
             string ConnectionString = "Server=(localdb)\\mssqllocaldb; Database=TTEcommerceDB2;Integrated Security=true;";
             services.AddDbContext<TTContext>(x => x.UseSqlServer(ConnectionString));
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(o => o.LoginPath = new PathString("/AdminLogin"));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IWebHostEnvironment env)
         {
+            app.UseAuthentication();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

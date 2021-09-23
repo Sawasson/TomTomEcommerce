@@ -7,61 +7,71 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using TomTomEcommerce.Core;
 using TomTomEcommerce.EFCore;
 
-namespace TomTomEcommerce.WebApp.Pages
+namespace TomTomEcommerce.BackOffice.Pages
 {
-    public class UserLoginModel : PageModel
+    public class AdminLoginModel : PageModel
     {
 
         private readonly TTUserService tTUserService;
 
 
-        public UserLoginModel(TTContext tTContext)
+        public AdminLoginModel(TTContext tTContext)
         {
             this.tTUserService = new TTUserService(tTContext);
         }
 
         [BindProperty(SupportsGet = true)]
         public User User { get; set; }
-
+        public string Message { get; set; }
 
 
         public void OnGet()
         {
         }
 
-        public async Task<RedirectToPageResult> OnPostLoginUser(User user)
+        public async Task<IActionResult> OnPostLoginAdmin(User user)
 
         {
-            bool login = tTUserService.LoginUser(user);
+
+            bool login = tTUserService.LoginAdmin(user);
             if (login == true)
             {
                 var userdata = tTUserService.GetUser(user.Email);
 
-                var claims = new[] { new Claim(ClaimTypes.Name, userdata.Name),
-                                     new Claim(ClaimTypes.Surname, userdata.LastName),
-                                     new Claim(ClaimTypes.Email, userdata.Email),
-                                     new Claim(ClaimTypes.NameIdentifier, userdata.Id.ToString())};
+                var claims = new List<Claim>
+                { 
+                    new Claim("Name", userdata.Name),
+                    new Claim("Surname", userdata.LastName),
+                    new Claim("Email", userdata.Email),
+                    new Claim("NameIdentifier", userdata.Id.ToString())};
 
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 await HttpContext.SignInAsync(
                     CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(identity));
 
-                return new RedirectToPageResult("Shop");
+                return new RedirectToPageResult("/Catalog/Product");
             }
             else
             {
-                return new RedirectToPageResult("Error");
+                ViewData["Message"] = "Email or Password No Match!";
             }
+            return Page();
         }
 
-        public async Task<RedirectToPageResult> LogOut()
+        public async Task<RedirectToPageResult> OnPostLogOut()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return new RedirectToPageResult("Shop");
+            return new RedirectToPageResult("AdminLogin");
+        }
+
+        public void OnGetFalse()
+        {
+
         }
     }
 }

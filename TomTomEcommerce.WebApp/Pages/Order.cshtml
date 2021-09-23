@@ -26,9 +26,9 @@
                             <div class="col-10">
 
                                 <div class="custom-control custom-radio mb-15">
-                                    <input type="radio" id="customRadio@(i)" name="customRadio" class="custom-control-input">
+                                    <input type="radio" id="customRadio@(i)" name="customRadio" class="custom-control-input" @(i==0 ? "checked" : "")>
                                     <label class="custom-control-label d-flex align-items-center justify-content-between" id="radioButton_@item.Id" data-id="@item.Id" for="customRadio@(i)"><span><b>@item.Title</b></span><span></span><span></span></label>
-                                    <label><span></span><span>@item.Description</span><span></span></label>
+                                    <label><span>@item.Description</span></label>
                                     <br />
                                     <label><span></span><span>@item.District.Name / @item.City.Name</span><span></span></label>
                                 </div>

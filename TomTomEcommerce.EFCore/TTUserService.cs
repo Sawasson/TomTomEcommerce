@@ -38,5 +38,18 @@ namespace TomTomEcommerce.EFCore
             }
             return login;
         }
+
+        public bool LoginAdmin(User user)
+        {
+            var admin = GetUser(user.Email);
+            var log = dbContext.Users.Where(x => x.Email == user.Email && x.Password == user.Password && admin.IsAdmin==true).SingleOrDefault();
+            bool login = false;
+            if (log != null)
+            {
+                login = true;
+            }
+            return login;
+        }
+
     }
 }

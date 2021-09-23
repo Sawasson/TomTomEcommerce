@@ -13,9 +13,11 @@ using TomTomEcommerce.Core;
 using TomTomEcommerce.EFCore;
 using LazZiya.ImageResize;
 using System.Drawing;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TomTomEcommerce.BackOffice.Pages.Catalog
 {
+    [Authorize]
     public class ProductModel : PageModel
     {
 
@@ -50,6 +52,7 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
                 ViewData = new ViewDataDictionary<ProductModel>(ViewData, this)
             };
         }
+
 
         public PartialViewResult OnGetListProductImage(int id)
         {
