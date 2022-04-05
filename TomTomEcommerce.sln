@@ -13,6 +13,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TomTomEcommerce.WebApp", "T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TomTomEcommerce.Helpers", "TomTomEcommerce.Helpers\TomTomEcommerce.Helpers.csproj", "{57A59E04-22C4-4FE0-B90F-12046FB9064C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TomTomEcommerce.MailFactory", "TomTomEcommerce.MailFactory\TomTomEcommerce.MailFactory.csproj", "{B947AFDE-4A07-456A-9B71-FD1CBF6FD27A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TomTomEcommerce.WebAPI", "TomTomEcommerce.WebAPI\TomTomEcommerce.WebAPI.csproj", "{5B50032C-07AD-4606-A41D-37C242E65E22}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMQ", "RabbitMQ\RabbitMQ.csproj", "{D75483E5-B3AF-4927-BEF6-FC703143E543}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeMenuWebApp", "TreeMenuWebApp\TreeMenuWebApp.csproj", "{1FA2A0D6-8A49-4CD5-839F-9A26873E9EF1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +47,22 @@ Global
 		{57A59E04-22C4-4FE0-B90F-12046FB9064C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57A59E04-22C4-4FE0-B90F-12046FB9064C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57A59E04-22C4-4FE0-B90F-12046FB9064C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B947AFDE-4A07-456A-9B71-FD1CBF6FD27A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B947AFDE-4A07-456A-9B71-FD1CBF6FD27A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B947AFDE-4A07-456A-9B71-FD1CBF6FD27A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B947AFDE-4A07-456A-9B71-FD1CBF6FD27A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B50032C-07AD-4606-A41D-37C242E65E22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B50032C-07AD-4606-A41D-37C242E65E22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B50032C-07AD-4606-A41D-37C242E65E22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B50032C-07AD-4606-A41D-37C242E65E22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D75483E5-B3AF-4927-BEF6-FC703143E543}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D75483E5-B3AF-4927-BEF6-FC703143E543}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D75483E5-B3AF-4927-BEF6-FC703143E543}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D75483E5-B3AF-4927-BEF6-FC703143E543}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FA2A0D6-8A49-4CD5-839F-9A26873E9EF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FA2A0D6-8A49-4CD5-839F-9A26873E9EF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FA2A0D6-8A49-4CD5-839F-9A26873E9EF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FA2A0D6-8A49-4CD5-839F-9A26873E9EF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

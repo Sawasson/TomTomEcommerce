@@ -9,6 +9,7 @@ using TomTomEcommerce.Core;
 
 namespace TomTomEcommerce.EFCore
 {
+
     public class TTWebServiceEFCore
     {
         private TTContext dbContext { get; set; }
@@ -154,6 +155,7 @@ namespace TomTomEcommerce.EFCore
             dbContext.SaveChanges();
 
             var orderId = dbContext.Orders.Where(x => x.OrderDate == order.OrderDate).FirstOrDefault().Id;
+            RabbitMQ.Publisher.Publish("order",orderId);
 
             foreach (var item in order.cartProducts)
             {
@@ -176,6 +178,8 @@ namespace TomTomEcommerce.EFCore
                 .Include(x => x.Adress.City)
                 .Include(x=>x.User)
                 .ToList();
+
+
             foreach (var item in entity)
             {
                 var cartProductList = dbContext.CartProducts.Where(x => x.OrderId == item.Id)
@@ -186,6 +190,8 @@ namespace TomTomEcommerce.EFCore
             }
             return entity;
 
+           
+
         }
 
 
@@ -194,6 +200,7 @@ namespace TomTomEcommerce.EFCore
         public List<CartProduct> CartProductListByCartId(int userId)
         {
             var anyCart = dbContext.Carts.Where(x => x.UserID == userId).SingleOrDefault();
+
             if (anyCart==null)
             {
                 return null;

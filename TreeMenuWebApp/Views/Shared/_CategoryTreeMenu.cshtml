@@ -1,0 +1,16 @@
+﻿@model IEnumerable<CategoryModelView>
+
+        <ul>
+            @foreach (var item in Model)
+            {
+                <li>@item.Name</li>
+                @if (item.Childs != null)
+                {
+                    @Html.Partial("_CategoryTreeMenu", item.Childs)
+                }
+
+            }
+        </ul>
+
+
+

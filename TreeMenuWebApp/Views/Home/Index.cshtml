@@ -1,0 +1,38 @@
+﻿@model IEnumerable<CategoryModelView>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+
+@*@Html.Partial("_CategoryTreeMenu", Model)*@
+
+<a class="btn btn-primary btn-sm">Add</a>
+
+
+
+
+
+@*<div id="partial">
+    </div>*@
+
+@*@section Scripts{
+        <script type="text/javascript">
+        $(document).ready(function () {
+
+            //List
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("LoadCategory", "Home")',
+                success: function (data) {
+                    $("#partial").html(data);
+                }
+            });
+        });
+        </script>
+    }*@

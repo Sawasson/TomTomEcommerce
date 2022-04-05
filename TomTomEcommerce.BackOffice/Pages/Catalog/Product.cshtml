@@ -2,9 +2,20 @@
 @model ProductModel
 @using TomTomEcommerce.BackOffice
 
+
+
 <h1><b>Products</b></h1>
 
 <button id="addproductbutton" class="btn btn-success">Add New Product</button>
+
+
+<button id="multipleEditProductBtn" class="btn btn-success">Multiple Edit Products</button>
+<br />
+<br />
+
+<div id="secretajaxtable2">
+
+</div>
 
 <div id="modaldiv">
 
@@ -26,6 +37,15 @@
         $(document).ready(function () {
 
 
+            @*//List
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Page("/Catalog/Product", "LoadCategory")',
+                    success: function (data) {
+                        $("#secretajaxtable2").html(data);
+                    }
+                });*@
+
 
             //List
             $.ajax({
@@ -34,6 +54,34 @@
                 success: function (data) {
                     $("#secretajaxtable").html(data);
                 }
+            });
+
+
+//GET - ADD TABLE ROW PRODUCT
+            @*$(document).on("click", "#addTableRowBtn", function (e) {
+                e.preventDefault();
+                alert("OK");
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Page("/Catalog/Product", "AddTableRowAddProduct")',
+                    success: function (data) {
+                        $("#secretRow").html("");
+                        $("#secretRow").html(data);
+                    }
+                });
+            });*@
+
+
+//GET - MULTIPE EDIT PRODUCTS
+            $("#multipleEditProductBtn").click(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Page("/Catalog/Product", "MultipleEditProducts")',
+                    success: function (data) {
+                        $("#secretajaxtable").html("");
+                        $("#secretajaxtable").html(data);
+                    }
+                });
             });
 
 //POST - ADD PRODUCT

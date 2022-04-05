@@ -18,7 +18,7 @@
                         <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Photos</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Other</a>
+                        <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Category</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
@@ -42,11 +42,11 @@
                                 @Html.DropDownListFor(x => x.Product.BrandId, Model.Brands, "---Choose a brand---", new { @class = "form-control" })
                                 @Html.ValidationMessageFor(x => x.Product.BrandId, "", new { @style = "color:red" })
                             </div>
-                            <div class="form-group">
+                            @*<div class="form-group">
                                 <b>@Html.Label("Category")</b>
                                 @Html.DropDownListFor(x => x.Product.CategoryId, Model.Categories, "---Choose a category---", new { @class = "form-control" })
                                 @Html.ValidationMessageFor(x => x.Product.CategoryId, "", new { @style = "color:red" })
-                            </div>
+                            </div>*@
                             <div class="form-group">
                                 <b>@Html.Label("Stock")</b>
                                 @Html.TextBoxFor(x => x.Product.Stock, "", new { @class = "form-control" })
@@ -69,7 +69,11 @@
                             </div>
                         </form>
                     </div>
-                    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
+                    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                        <div id="treemenu">
+                            @*@Html.Partial("Catalog/Category/_CategoryTreePartial", Model.CategoryList)*@
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -80,3 +84,19 @@
     </div>
 </div>
 
+
+
+<script>
+    $(document).ready(function () {
+
+        //GET - LIST CATEGORY TREE
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Page("/Catalog/Product", "CategoryTree")',
+            success: function (data) {
+                $("#treemenu").html(data);
+            }
+        });
+    });
+</script>
+    

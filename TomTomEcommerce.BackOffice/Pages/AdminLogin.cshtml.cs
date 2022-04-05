@@ -54,7 +54,7 @@ namespace TomTomEcommerce.BackOffice.Pages
                     CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(identity));
 
-                return new RedirectToPageResult("/Catalog/Product");
+                return new RedirectToPageResult("Index");
             }
             else
             {

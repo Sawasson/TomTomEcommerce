@@ -24,6 +24,8 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
 
         [BindProperty(SupportsGet = true)]
         public List<TomTomEcommerce.Core.Brand> listmodel { get; set; }
+        public int TableRowCount { get; set; }
+
 
         public PartialViewResult OnGetListBrand()
         {
@@ -102,6 +104,56 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
             };
         }
 
+        public PartialViewResult OnGetMultipleEditBrands(int n)
+        {
+            TableRowCount = n;
+            listmodel = tTServiceEFCore.ListBrand();
+
+            return new PartialViewResult
+            {
+                ViewName = ("Brand/_MultipleEditBrands"),
+                ViewData = new ViewDataDictionary<BrandModel>(ViewData, this)
+            };
+        }
+
+        public IActionResult OnPostMultipleEditBrands(List<TomTomEcommerce.Core.Brand> listmodel)
+        {
+
+            foreach (var item in listmodel)
+            {
+                if (item.Id != 0)
+                {
+                    if (item.Name==null && item.Description==null)
+                    {
+                        tTServiceEFCore.DeleteBrand(item.Id);
+                    }
+
+                    else
+                    {
+                        tTServiceEFCore.EditBrand(item);
+                    }
+                }
+                else
+                {
+                    tTServiceEFCore.AddNewBrand(item);
+                }
+            }
+
+
+            return Page();
+        }
+
+        public PartialViewResult OnGetAddTableRowAddBrand(int n)
+        {
+            TableRowCount = n;
+            listmodel = null;
+            return new PartialViewResult
+            {
+                ViewName = ("Brand/_TableRowAddBrand"),
+                ViewData = new ViewDataDictionary<BrandModel>(ViewData, this)
+
+            };
+        }
     }
 }
 

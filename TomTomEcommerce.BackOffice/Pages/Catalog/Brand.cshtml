@@ -6,6 +6,9 @@
 
 <button class="btn btn-success" id="addbrandbutton" style="margin-bottom:15px">Add New Brand</button>
 
+<button id="multipleEditBrandBtn" class="btn btn-success" style="margin-bottom:15px">Multiple Edit Brands</button>
+<br />
+<br />
 
 <div id="modaldiv">
 
@@ -29,7 +32,19 @@
                 success: function (data) {
                     $("#secretajaxtable").html(data);
                 }
-            }); 
+            });
+
+            //GET - MULTIPE EDIT BRANDS
+            $("#multipleEditBrandBtn").click(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Page("/Catalog/Brand", "MultipleEditBrands")',
+                    success: function (data) {
+                        $("#secretajaxtable").html("");
+                        $("#secretajaxtable").html(data);
+                    }
+                });
+            });
 
             //Add Brand - Post
             $(document).on("click", "#addbrandbuttonmodal", function (e) {

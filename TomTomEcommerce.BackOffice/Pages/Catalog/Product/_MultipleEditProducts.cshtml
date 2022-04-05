@@ -1,0 +1,110 @@
+﻿@model TomTomEcommerce.BackOffice.Pages.Catalog.ProductModel
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Product List DataTable</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <form method="post" asp-page-handler="MultipleEditProducts">
+                @*@using (Html.BeginForm("MultipleEditProducts", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))*@
+
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead style="text-align:center; margin-bottom:5px">
+                        <tr>
+                            <th><b>Id</b></th>
+                            <th><b>Name</b></th>
+                            <th><b>Description</b></th>
+                            <th><b>Stock</b></th>
+                            <th><b>Price</b></th>
+                            <th><b>Delete</b></th>
+                        </tr>
+                    </thead>
+                    <tfoot style="text-align:center; margin-bottom:5px">
+                        <tr>
+                            <td colspan="5">
+                                <a id="addTableRowBtn" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                            </td>
+                        </tr>
+                    </tfoot>
+                    <tbody style="text-align:center">
+                        @*@foreach (var x in Model.listmodel)*@
+                        @for (int i = 0; i < Model.listmodel.Count; i++)
+                        {
+                            @Html.HiddenFor(Model => Model.listmodel[i].BrandId)
+                            @Html.HiddenFor(Model => Model.listmodel[i].CategoryId)
+                            @Html.HiddenFor(Model => Model.listmodel[i].Id)
+
+
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(Model => Model.listmodel[i].Id)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(Model => Model.listmodel[i].Name)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(Model => Model.listmodel[i].Description)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(Model => Model.listmodel[i].Stock)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(Model => Model.listmodel[i].Price)
+                            </td>
+                            <td>
+                                <a class="btn btn-warning btn-sm" id="deletebutton_@Model.listmodel[i].Id" data-id="@Model.listmodel[i].Id"><i class="fas fa-trash-restore"></i></a>
+                            </td>
+                        </tr>
+
+                        }
+
+
+                    </tbody>
+                    </table>
+                <button type="submit" class="btn btn-success">Save All Changes</button>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    //ADD ROW TO TABLE
+    $("#addTableRowBtn").click(function () {
+        //e.preventDefault();
+        @*const count = @Model.listmodel.Count();*@
+        const count = $('#dataTable tr').length - 2;
+        data = {};
+        data["n"] = count;
+        $.ajax({
+            type: 'Get',
+            url: '@Url.Page("/Catalog/Product", "AddTableRowAddProduct")',
+            data: { n: count },
+            success: function (data) {
+                $('#dataTable tr:last').after(data);
+
+            }
+        });
+    });
+
+    //DELETE ROW
+
+            $('[id^=deletebutton]').click(function () {
+            var id = $(this).attr("data-id");
+            alert(id);
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Page("/Catalog/Product", "DeleteProduct")',
+                data: { id: id },
+                success: function (data) {
+                    $("#modaldiv").html("");
+                    $("#modaldiv").html(data);
+                    $("#deleteproductmodal").modal("show");
+                }
+            });
+        });
+
+</script>

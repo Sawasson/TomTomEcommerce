@@ -6,22 +6,35 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TomTomEcommerce.EFCore;
 
 namespace TomTomEcommerce.BackOffice.Pages
 {
     [Authorize]
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly TTServiceEFCore tTServiceEFCore;
+        private readonly Microsoft.AspNetCore.Hosting.IWebHostEnvironment hostingEnvironment;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(TTContext tTContext)
         {
-            _logger = logger;
+            this.tTServiceEFCore = new TTServiceEFCore(tTContext);
         }
+
+        [BindProperty(SupportsGet = true)]
+        public List<TomTomEcommerce.Core.Category> CategortList { get; set; }
+        public List<TomTomEcommerce.Core.Brand> BrandList { get; set; }
+        public List<TomTomEcommerce.Core.Product> ProductList { get; set; }
+        public TomTomEcommerce.Core.ProductImage ProductImage { get; set; }
+
 
         public void OnGet()
         {
-
+            CategortList = tTServiceEFCore.ListCategory();
+            BrandList = tTServiceEFCore.ListBrand();
+            ProductList = tTServiceEFCore.ListProduct();
         }
+
+        //public PageResult 
     }
 }

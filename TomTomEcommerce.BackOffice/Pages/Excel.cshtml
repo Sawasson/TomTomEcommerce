@@ -1,0 +1,98 @@
+﻿@page
+@model TomTomEcommerce.BackOffice.Pages.ExcelModel
+@{
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Import Brands</h6>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-6">
+                <a asp-page-handler="GiveBrandExcelTable" class="d-none d-lg-inline-block btn btn-sm btn-success shadow-sm">
+                    <i class="fas fa-file-export fa-lg text-white-50"></i> Give Me an Empty Excel Table For Brands
+                </a>
+            </div>
+            <div class="col-6">
+                <form id="fileForm" asp-page-handler="SaveBrandExcelTable" method="post" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    <div class="form-group">
+                        <b>@Html.Label("Image")</b>
+                        @*<input type="file" id="FileUpload1" />*@
+                        <input asp-for="UploadedFile" class="d-none d-lg-inline-block shadow-sm">
+                        <input type="submit" id="importExcelBtn" class="btn btn-sm btn-success" value="Upload File" />
+                        @*@Html.ValidationMessageFor(x => x.Product.DocumentFile.FileName, "", new { @style = "color:red" })*@
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="secretajaxtable">
+        @if (Model.Brands != null)
+        {
+        <form method="post" asp-page-handler="SaveDatabaseBrandExcelTable">
+
+            @Html.Partial("Catalog/Brand/_ListBrands.cshtml", Model.Brands)
+            @*@{ int i = 0;}
+            @foreach (var item in Model.Brands)
+            {
+                <input type="text" name="[0].@item.Name" value="[0].@item.Name" />
+                <input type="text" name="[0].@item.Description" value="[0].@item.Description" />
+
+                i++;
+            }*@
+            <button type="submit" id="savedb" class="btn btn-success">Save Database</button>
+
+        </form>
+        }
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script>
+
+        $(document).ready(function () {
+            var formData = new FormData();
+
+
+
+//POST - SAVE DATABASE BRAND LIST
+
+            $("#importExcelBtn").click(function (evt) {
+                debugger;
+                $(document).(function () {
+
+                alert("ok formdata");
+                evt.preventDefault();
+                formData = formData.document.forms.fileForm;
+                alert(formData);
+                });
+            });
+
+
+            @*$("#SaveDatabaseBrandExcelTable").click(function (evt) {
+                alert("ok");
+                $.ajax({
+                type: 'POST',
+                url: '@Url.Page("Excel", "SaveDatabaseBrandExcelTable")',
+                data: formData,
+                success: function (data) {
+                    $("#SaveDatabaseBrandExcelTable").html(data);
+                }
+                });
+            });*@
+
+
+
+
+
+        });
+
+    </script>
+}

@@ -5,49 +5,57 @@
 }
 
 
-<table class="table table-bordered" cellspacing="0" width="100%">
-    <thead style="text-align:center; margin-bottom:5px; background-color:lightskyblue">
-        <tr>
-            <th>
-                <b>Id</b>
-            </th>
-            <th>
-                <b>Name</b>
-            </th>
-            <th>
-                <b>Description</b>
-            </th>
-            <th>
-                Edit
-            </th>
-            <th>
-                Delete
-            </th>
-        </tr>
-    </thead>
-    <tbody style="text-align:center">
-        @foreach (var x in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(Model => x.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(Model => x.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(Model => x.Description)
-                </td>
-                <td>
-                    <a class="btn btn-primary btn-sm" id="editbutton_@x.Id" data-id="@x.Id">Edit</a>
-                </td>
-                <td>
-                    <a class="btn btn-warning btn-sm" id="deletebutton_@x.Id" data-id="@x.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Brand List DataTable</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead style="text-align:center; margin-bottom:5px">
+                    <tr>
+                        <th><b>Id</b></th>
+                        <th><b>Name</b></th>
+                        <th><b>Description</b></th>
+                        <th><b>Edit</b></th>
+                        <th><b>Delete</b></th>
+                    </tr>
+                </thead>
+                <tfoot style="text-align:center; margin-bottom:5px">
+                    <tr>
+                        <th><b>Id</b></th>
+                        <th><b>Name</b></th>
+                        <th><b>Description</b></th>
+                        <th><b>Edit</b></th>
+                        <th><b>Delete</b></th>
+                    </tr>
+                </tfoot>
+                <tbody style="text-align:center">
+                    @foreach (var x in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(Model => x.Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(Model => x.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(Model => x.Description)
+                            </td>
+                            <td>
+                                <a class="btn btn-primary btn-sm" id="editbutton_@x.Id" data-id="@x.Id"><i class="fas fa-edit"></i></a>
+                            </td>
+                            <td>
+                                <a class="btn btn-warning btn-sm" id="deletebutton_@x.Id" data-id="@x.Id"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 <script>
 

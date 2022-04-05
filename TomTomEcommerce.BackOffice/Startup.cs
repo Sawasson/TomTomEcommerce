@@ -47,6 +47,8 @@ namespace TomTomEcommerce.BackOffice
                 app.UseExceptionHandler("/Error");
             }
 
+            app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();

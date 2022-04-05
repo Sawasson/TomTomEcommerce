@@ -6,6 +6,78 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
+                <div>
+                    @foreach (var item in Model.Orders)
+                    {
+                        <p>
+                            <a class="btn karl-checkout-btn" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <i class="ti-plus"></i>
+                                            <b>Order Id: @item.Id</b>
+                                            <b>Order Date: @item.OrderDate</b>
+                                            <b>Total: $@item.TotalPrice</b>
+                            </a>
+                        </p>
+                        <div class="collapse" id="collapseExample">
+                            <div class="cart-table clearfix">
+                                <table class="table table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th>Adress</th>
+                                            <th>Order Id</th>
+                                            <th>Products</th>
+                                            <th>Date</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                            <tr>
+                                                <td>
+                                                    <label><span></span><span>@item.Adress.Description</span><span></span></label>
+                                                    <br />
+                                                    <label><span></span><span>@item.Adress.District.Name / @item.Adress.City.Name</span><span></span></label>
+                                                </td>
+                                                <td>@item.Id</td>
+                                                <td>
+                                                    @foreach (var product in item.cartProducts)
+                                                    {
+                                                        var total = product.Product.Price * product.Quantity;
+                                                        <span><img src="img/product-img/@product.Product.ProductImages.FirstOrDefault().PathSmall" /></span><span>@product.Product.Name</span><span>@product.Quantity</span> <span>$@total</span>
+
+                                                    }
+                                                </td>
+                                                <td>@item.OrderDate</td>
+                                                <td>@item.TotalPrice</td>
+                                            </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="card card-body">
+                                <form asp-page-handler="AddAdress" method="post">
+                                    <div class="row">
+                                        <div class="col-12 mb-4">
+                                            <label>Adress Title <span>*</span></label>
+                                        </div>
+                                        <div class="col-12 mb-4">
+                                            <label>Adress Line <span>*</span></label>
+                                        </div>
+                                        <div class="col-12 mb-4">
+                                            <label>City <span>*</span></label>
+                                            @*@Html.DropDownList("CityId", Model.Cities, "---Choose a brand---", new { @class = "form-control" })*@
+                                        </div>
+                                        <div class="col-12 mb-4">
+                                            <label>District <span>*</span></label>
+                                        </div>
+                                        <div class="col-12">
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+
                 <div class="cart-table clearfix">
                     <table class="table table-responsive">
                         <thead>
@@ -20,21 +92,21 @@
                         <tbody>
                             @foreach (var item in Model.Orders)
                             {
-                            <tr>
-                                <td>
-                                    <label><span></span><span>@item.Adress.Description</span><span></span></label>
-                                    <br />
-                                    <label><span></span><span>@item.Adress.District.Name / @item.Adress.City.Name</span><span></span></label>
-                                </td>
-                                <td>@item.Id</td>
-                                <td>
-                                    @foreach (var product in item.cartProducts)
-                                    {
-                                        var total = product.Product.Price * product.Quantity;
-                                        <span><img src="img/product-img/@product.Product.ProductImages.FirstOrDefault().PathSmall" /></span><span>@product.Product.Name</span><span>@product.Quantity</span> <span>$@total</span>
+                                <tr>
+                                    <td>
+                                        <label><span></span><span>@item.Adress.Description</span><span></span></label>
+                                        <br />
+                                        <label><span></span><span>@item.Adress.District.Name / @item.Adress.City.Name</span><span></span></label>
+                                    </td>
+                                    <td>@item.Id</td>
+                                    <td>
+                                        @foreach (var product in item.cartProducts)
+                                        {
+                                            var total = product.Product.Price * product.Quantity;
+                                            <span><img src="img/product-img/@product.Product.ProductImages.FirstOrDefault().PathSmall" /></span><span>@product.Product.Name</span><span>@product.Quantity</span> <span>$@total</span>
 
-                                    }
-                                </td>
+                                        }
+                                    </td>
                                     <td>@item.OrderDate</td>
                                     <td>@item.TotalPrice</td>
                                 </tr>

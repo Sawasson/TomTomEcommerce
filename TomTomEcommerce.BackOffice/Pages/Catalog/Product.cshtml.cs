@@ -35,10 +35,13 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
         public TomTomEcommerce.Core.Product Product { get; set; }
         public TomTomEcommerce.Core.ProductImage ProductImage { get; set; }
         public List<ProductImage> ProductImages { get; set; }
+        public List<TomTomEcommerce.Core.Models.CategoryViewModel> CategoryList { get; set; }
 
         public SelectList Brands { get; set; }
         public SelectList Categories { get; set; }
         public List<IFormFile> UploadedFile { get; set; }
+
+        public int TableRowCount { get; set; }
 
 
         public PartialViewResult OnGetListProduct()
@@ -65,14 +68,59 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
             };
         }
 
+        public PartialViewResult OnGetCategoryTree()
+        {
+            List<TomTomEcommerce.Core.Category> categoryList = tTServiceEFCore.GetCategories();
+
+            List<TomTomEcommerce.Core.Models.CategoryViewModel> list = new List<TomTomEcommerce.Core.Models.CategoryViewModel>();
+
+            foreach (var item in categoryList)
+            {
+                list.Add(new TomTomEcommerce.Core.Models.CategoryViewModel
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    ParentId = item.ParentId
+                });
+            }
+
+            CategoryList = ToTree(list, null);
+
+            //return new PartialViewResult
+            //{
+            //    ViewName = ("/Catalog/Category/_CategoryTreePartial"),
+            //    ViewData = new ViewDataDictionary<ProductModel>(ViewData, this.CategoryList)
+            //};
+            return PartialView("/Catalog/Category/_CategoryTreePartial", this);
+        
+        }
 
         public PartialViewResult OnGetAddProduct()
         {
+            //List<TomTomEcommerce.Core.Category> categoryList = tTServiceEFCore.GetCategories();
+
+            //List<TomTomEcommerce.Core.Models.CategoryViewModel> list = new List<TomTomEcommerce.Core.Models.CategoryViewModel>();
+
+            //foreach (var item in categoryList)
+            //{
+            //    list.Add(new TomTomEcommerce.Core.Models.CategoryViewModel
+            //    {
+            //        Id = item.Id,
+            //        Name = item.Name,
+            //        ParentId = item.ParentId
+            //    });
+            //}
+
+            //var categoryModel = ToTree(list, null);
+            //CategoryList = categoryModel;
+
+
             var brands = tTServiceEFCore.GetBrands();
-            var categories = tTServiceEFCore.GetCategories();
+            //var categories = tTServiceEFCore.GetCategories();
 
             Brands = new SelectList(brands, "Id", "Name");
-            Categories = new SelectList(categories, "Id", "Name");
+            //Categories = new SelectList(categories, "Id", "Name");
+
 
             //return new PartialViewResult
             //{
@@ -80,6 +128,35 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
             //    ViewData = new ViewDataDictionary<ProductModel>(ViewData, this)
             //};
             return PartialView("Product/_AddProductForm", this);
+        }
+
+        public static List<TomTomEcommerce.Core.Models.CategoryViewModel> ToTree(IEnumerable<TomTomEcommerce.Core.Models.CategoryViewModel> list, List<TomTomEcommerce.Core.Models.CategoryViewModel> parents = null)
+        {
+            if (parents == null)
+            {
+                parents = list.OrderBy(p => p.Name)
+                    .Where(a => !a.ParentId.HasValue).ToList();
+            }
+
+            for (int i = 0; i < parents.Count; i++)
+            {
+
+                //if (parents[i].ParentId.HasValue)
+                //{
+
+                //    parents[i].Parent = list.Where(l => l.Id == parents[i].ParentId.Value).SingleOrDefault();
+                //}
+
+                var childs = list.OrderBy(x => x.Name)
+                            .Where(l => l.ParentId == parents[i].Id).ToList();
+
+                if (childs != null)
+                {
+                    parents[i].Childs = new List<TomTomEcommerce.Core.Models.CategoryViewModel>(childs);
+                    ToTree(list, childs);
+                }
+            }
+            return parents;
         }
 
         public PartialViewResult OnPostAddProduct(TomTomEcommerce.Core.Product product)
@@ -251,6 +328,49 @@ namespace TomTomEcommerce.BackOffice.Pages.Catalog
                 ViewData = new ViewDataDictionary<T>(ViewData, Model)
             };
 
+        }
+
+        public PartialViewResult OnGetMultipleEditProducts(int n)
+        {
+            TableRowCount = n;
+            listmodel = tTServiceEFCore.ListProduct();
+
+            return new PartialViewResult
+            {
+                ViewName = ("Product/_MultipleEditProducts"),
+                ViewData = new ViewDataDictionary<ProductModel>(ViewData, this)
+            };
+        }
+
+        public IActionResult OnPostMultipleEditProducts(List<TomTomEcommerce.Core.Product> listmodel)
+        {
+
+                foreach (var item in listmodel)
+                {
+                if (item.Id!=0)
+                {
+                    tTServiceEFCore.EditProduct(item);
+                }
+                else
+                {
+                    tTServiceEFCore.AddNewProduct(item);
+                }
+            }
+            
+            
+            return Page();
+        }
+
+        public PartialViewResult OnGetAddTableRowAddProduct(int n)
+        {
+            TableRowCount = n;
+            listmodel = null;
+            return new PartialViewResult
+            {
+                ViewName = ("Product/_TableRowAddProduct"),
+                ViewData = new ViewDataDictionary<ProductModel>(ViewData, this)
+
+            };
         }
     }
 }

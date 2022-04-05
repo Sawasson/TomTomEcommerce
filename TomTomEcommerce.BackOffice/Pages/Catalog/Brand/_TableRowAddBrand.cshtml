@@ -1,0 +1,19 @@
+﻿@model TomTomEcommerce.BackOffice.Pages.Catalog.BrandModel
+@{ int i = Model.TableRowCount;}
+@{ int e = 0;}
+<tr>
+    <td>
+        0
+    </td>
+    <td>
+        @Html.TextBoxFor(Model => Model.listmodel[i].Name)
+    </td>
+    <td>
+        @Html.TextBoxFor(Model => Model.listmodel[i].Description)
+    </td>
+    <td>
+        <a class="btn btn-warning btn-sm" id="deletebutton_@i" data-id="@i"><i class="fas fa-trash-restore"></i></a>
+    </td>
+</tr>
+
+

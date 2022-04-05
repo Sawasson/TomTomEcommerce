@@ -1,0 +1,13 @@
+﻿@model TomTomEcommerce.BackOffice.Pages.Catalog.ProductModel
+
+<ul>
+    @foreach (var item in Model.CategoryList)
+    {
+        <li>@item.Name</li>
+        @if (item.Childs != null)
+        {
+            @Html.Partial("_CategoryTreeMenu", item.Childs)
+        }
+
+    }
+</ul>
