@@ -17,9 +17,9 @@ namespace TomTomEcommerce.WebApp.Pages
             _logger = logger;
         }
 
-        public void OnGet()
+        public PageResult OnGet()
         {
-
+            return Page();
         }
     }
 }
